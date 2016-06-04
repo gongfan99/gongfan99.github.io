@@ -1,0 +1,1782 @@
+<!DOCTYPE html>
+<!-- saved from url=(0067)http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html -->
+<html class="js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths js-menubar" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+  <meta name="description" content="bootstrap admin template">
+  <meta name="author" content="">
+
+  <title>Message | Remark Admin Template</title>
+
+  <link rel="apple-touch-icon" href="http://getbootstrapadmin.com/remark/mmenu/assets/images/apple-touch-icon.png">
+  <link rel="shortcut icon" href="http://getbootstrapadmin.com/remark/mmenu/assets/images/favicon.ico">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="./Message _ Remark Admin Template_files/bootstrap.min.css">
+  <link rel="stylesheet" href="./Message _ Remark Admin Template_files/bootstrap-extend.min.css">
+  <link rel="stylesheet" href="./Message _ Remark Admin Template_files/site.min.css">
+
+  <!-- Skin tools (demo site only) -->
+  <link rel="stylesheet" href="./Message _ Remark Admin Template_files/skintools.min.css">
+  <script async="" src="./Message _ Remark Admin Template_files/analytics.js"></script><script src="./Message _ Remark Admin Template_files/skintools.min.js"></script>
+
+  <!-- Plugins -->
+  <link rel="stylesheet" href="./Message _ Remark Admin Template_files/animsition.min.css">
+  <link rel="stylesheet" href="./Message _ Remark Admin Template_files/asScrollable.min.css">
+  <link rel="stylesheet" href="./Message _ Remark Admin Template_files/switchery.min.css">
+  <link rel="stylesheet" href="./Message _ Remark Admin Template_files/introjs.min.css">
+  <link rel="stylesheet" href="./Message _ Remark Admin Template_files/slidePanel.min.css">
+  <link rel="stylesheet" href="./Message _ Remark Admin Template_files/jquery-mmenu.min.css">
+  <link rel="stylesheet" href="./Message _ Remark Admin Template_files/flag-icon.min.css">
+
+  <!-- Page -->
+  <link rel="stylesheet" href="./Message _ Remark Admin Template_files/message.min.css">
+
+  <!-- Fonts -->
+  <link rel="stylesheet" href="./Message _ Remark Admin Template_files/web-icons.min.css">
+  <link rel="stylesheet" href="./Message _ Remark Admin Template_files/brand-icons.min.css">
+  <link rel="stylesheet" href="./Message _ Remark Admin Template_files/css">
+
+
+  <!--[if lt IE 9]>
+    <script src="../../../global/vendor/html5shiv/html5shiv.min.js"></script>
+    <![endif]-->
+
+  <!--[if lt IE 10]>
+    <script src="../../../global/vendor/media-match/media.match.min.js"></script>
+    <script src="../../../global/vendor/respond/respond.min.js"></script>
+    <![endif]-->
+
+  <!-- Scripts -->
+  <script src="./Message _ Remark Admin Template_files/modernizr.min.js"></script>
+  <script src="./Message _ Remark Admin Template_files/breakpoints.min.js"></script>
+  <script>
+    Breakpoints();
+  </script>
+</head>
+<body  ng-app="index" ng-controller="index_main" class="app-message site-navbar-small mm-wrapper site-menubar-fold">
+  <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+  <nav class="site-navbar navbar navbar-default navbar-fixed-top navbar-mega" role="navigation">
+
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle hamburger hamburger-close navbar-toggle-left hided" data-toggle="menubar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="hamburger-bar"></span>
+      </button>
+      <button type="button" class="navbar-toggle collapsed" data-target="#site-navbar-collapse" data-toggle="collapse">
+        <i class="icon wb-more-horizontal" aria-hidden="true"></i>
+      </button>
+      <div class="navbar-brand navbar-brand-center site-gridmenu-toggle" data-toggle="gridmenu">
+        <img class="navbar-brand-logo" src="./Message _ Remark Admin Template_files/logo.png" title="Remark">
+        <span class="navbar-brand-text hidden-xs"> Remark</span>
+      </div>
+      <button type="button" class="navbar-toggle collapsed" data-target="#site-navbar-search" data-toggle="collapse">
+        <span class="sr-only">Toggle Search</span>
+        <i class="icon wb-search" aria-hidden="true"></i>
+      </button>
+    </div>
+
+    <div class="navbar-container container-fluid">
+      <!-- Navbar Collapse -->
+      <div class="collapse navbar-collapse navbar-collapse-toolbar" id="site-navbar-collapse">
+        <!-- Navbar Toolbar -->
+        <ul class="nav navbar-toolbar">
+          <li class="hidden-float" id="toggleMenubar">
+            <a data-toggle="menubar" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#" role="button">
+              <i class="icon hamburger hamburger-arrow-left hided">
+                  <span class="sr-only">Toggle menubar</span>
+                  <span class="hamburger-bar"></span>
+                </i>
+            </a>
+          </li>
+          <li class="hidden-xs" id="toggleFullscreen">
+            <a class="icon icon-fullscreen" data-toggle="fullscreen" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#" role="button">
+              <span class="sr-only">Toggle fullscreen</span>
+            </a>
+          </li>
+          <li class="hidden-float">
+            <a class="icon wb-search" data-toggle="collapse" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#" data-target="#site-navbar-search" role="button">
+              <span class="sr-only">Toggle Search</span>
+            </a>
+          </li>
+          <li class="dropdown dropdown-fw dropdown-mega">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#" aria-expanded="false" data-animation="fade" role="button">Mega <i class="icon wb-chevron-down-mini" aria-hidden="true"></i></a>
+            <ul class="dropdown-menu" role="menu">
+              <li role="presentation">
+                <div class="mega-content">
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <h5>UI Kit</h5>
+                      <ul class="blocks-2">
+                        <li class="mega-menu margin-0">
+                          <ul class="list-icons">
+                            <li><i class="wb-chevron-right-mini" aria-hidden="true"></i>
+                              <a href="http://getbootstrapadmin.com/remark/mmenu/advanced/animation.html">Animation</a>
+                            </li>
+                            <li><i class="wb-chevron-right-mini" aria-hidden="true"></i>
+                              <a href="http://getbootstrapadmin.com/remark/mmenu/uikit/buttons.html">Buttons</a>
+                            </li>
+                            <li><i class="wb-chevron-right-mini" aria-hidden="true"></i>
+                              <a href="http://getbootstrapadmin.com/remark/mmenu/uikit/colors.html">Colors</a>
+                            </li>
+                            <li><i class="wb-chevron-right-mini" aria-hidden="true"></i>
+                              <a href="http://getbootstrapadmin.com/remark/mmenu/uikit/dropdowns.html">Dropdowns</a>
+                            </li>
+                            <li><i class="wb-chevron-right-mini" aria-hidden="true"></i>
+                              <a href="http://getbootstrapadmin.com/remark/mmenu/uikit/icons.html">Icons</a>
+                            </li>
+                            <li><i class="wb-chevron-right-mini" aria-hidden="true"></i>
+                              <a href="http://getbootstrapadmin.com/remark/mmenu/advanced/lightbox.html">Lightbox</a>
+                            </li>
+                          </ul>
+                        </li>
+                        <li class="mega-menu margin-0">
+                          <ul class="list-icons">
+                            <li><i class="wb-chevron-right-mini" aria-hidden="true"></i>
+                              <a href="http://getbootstrapadmin.com/remark/mmenu/uikit/modals.html">Modals</a>
+                            </li>
+                            <li><i class="wb-chevron-right-mini" aria-hidden="true"></i>
+                              <a href="http://getbootstrapadmin.com/remark/mmenu/uikit/panel-structure.html">Panels</a>
+                            </li>
+                            <li><i class="wb-chevron-right-mini" aria-hidden="true"></i>
+                              <a href="http://getbootstrapadmin.com/remark/mmenu/structure/overlay.html">Overlay</a>
+                            </li>
+                            <li><i class="wb-chevron-right-mini" aria-hidden="true"></i>
+                              <a href="http://getbootstrapadmin.com/remark/mmenu/uikit/tooltip-popover.html">Tooltips</a>
+                            </li>
+                            <li><i class="wb-chevron-right-mini" aria-hidden="true"></i>
+                              <a href="http://getbootstrapadmin.com/remark/mmenu/advanced/scrollable.html">Scrollable</a>
+                            </li>
+                            <li><i class="wb-chevron-right-mini" aria-hidden="true"></i>
+                              <a href="http://getbootstrapadmin.com/remark/mmenu/uikit/typography.html">Typography</a>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="col-sm-4">
+                      <h5>Media
+                        <span class="badge badge-success">4</span>
+                      </h5>
+                      <ul class="blocks-3">
+                        <li>
+                          <a class="thumbnail margin-0" href="javascript:void(0)">
+                            <img class="width-full" src="./Message _ Remark Admin Template_files/view-1-150x100.jpg" alt="...">
+                          </a>
+                        </li>
+                        <li>
+                          <a class="thumbnail margin-0" href="javascript:void(0)">
+                            <img class="width-full" src="./Message _ Remark Admin Template_files/view-2-150x100.jpg" alt="...">
+                          </a>
+                        </li>
+                        <li>
+                          <a class="thumbnail margin-0" href="javascript:void(0)">
+                            <img class="width-full" src="./Message _ Remark Admin Template_files/view-3-150x100.jpg" alt="...">
+                          </a>
+                        </li>
+                        <li>
+                          <a class="thumbnail margin-0" href="javascript:void(0)">
+                            <img class="width-full" src="./Message _ Remark Admin Template_files/view-4-150x100.jpg" alt="...">
+                          </a>
+                        </li>
+                        <li>
+                          <a class="thumbnail margin-0" href="javascript:void(0)">
+                            <img class="width-full" src="./Message _ Remark Admin Template_files/view-5-150x100.jpg" alt="...">
+                          </a>
+                        </li>
+                        <li>
+                          <a class="thumbnail margin-0" href="javascript:void(0)">
+                            <img class="width-full" src="./Message _ Remark Admin Template_files/view-6-150x100.jpg" alt="...">
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="col-sm-4">
+                      <h5 class="margin-bottom-0">Accordion</h5>
+                      <!-- Accordion -->
+                      <div class="panel-group panel-group-simple" id="siteMegaAccordion" aria-multiselectable="true" role="tablist">
+                        <div class="panel">
+                          <div class="panel-heading" id="siteMegaAccordionHeadingOne" role="tab">
+                            <a class="panel-title" data-toggle="collapse" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#siteMegaCollapseOne" data-parent="#siteMegaAccordion" aria-expanded="false" aria-controls="siteMegaCollapseOne">
+                                Collapsible Group Item #1
+                              </a>
+                          </div>
+                          <div class="panel-collapse collapse" id="siteMegaCollapseOne" aria-labelledby="siteMegaAccordionHeadingOne" role="tabpanel">
+                            <div class="panel-body">
+                              De moveat laudatur vestra parum doloribus labitur sentire partes, eripuit praesenti
+                              congressus ostendit alienae, voluptati ornateque
+                              accusamus clamat reperietur convicia albucius.
+                            </div>
+                          </div>
+                        </div>
+                        <div class="panel">
+                          <div class="panel-heading" id="siteMegaAccordionHeadingTwo" role="tab">
+                            <a class="panel-title collapsed" data-toggle="collapse" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#siteMegaCollapseTwo" data-parent="#siteMegaAccordion" aria-expanded="false" aria-controls="siteMegaCollapseTwo">
+                                Collapsible Group Item #2
+                              </a>
+                          </div>
+                          <div class="panel-collapse collapse" id="siteMegaCollapseTwo" aria-labelledby="siteMegaAccordionHeadingTwo" role="tabpanel">
+                            <div class="panel-body">
+                              Praestabiliorem. Pellat excruciant legantur ullum leniter vacare foris voluptate
+                              loco ignavi, credo videretur multoque choro fatemur
+                              mortis animus adoptionem, bello statuat expediunt
+                              naturales.
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="panel">
+                          <div class="panel-heading" id="siteMegaAccordionHeadingThree" role="tab">
+                            <a class="panel-title collapsed" data-toggle="collapse" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#siteMegaCollapseThree" data-parent="#siteMegaAccordion" aria-expanded="false" aria-controls="siteMegaCollapseThree">
+                                Collapsible Group Item #3
+                              </a>
+                          </div>
+                          <div class="panel-collapse collapse" id="siteMegaCollapseThree" aria-labelledby="siteMegaAccordionHeadingThree" role="tabpanel">
+                            <div class="panel-body">
+                              Horum, antiquitate perciperet d conspectum locus obruamus animumque perspici probabis
+                              suscipere. Desiderat magnum, contenta poena desiderant
+                              concederetur menandri damna disputandum corporum.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- End Accordion -->
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <!-- End Navbar Toolbar -->
+
+        <!-- Navbar Toolbar Right -->
+        <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)" data-animation="scale-up" aria-expanded="false" role="button">
+              <span class="flag-icon flag-icon-us"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              <li role="presentation">
+                <a href="javascript:void(0)" role="menuitem">
+                  <span class="flag-icon flag-icon-gb"></span> English</a>
+              </li>
+              <li role="presentation">
+                <a href="javascript:void(0)" role="menuitem">
+                  <span class="flag-icon flag-icon-fr"></span> French</a>
+              </li>
+              <li role="presentation">
+                <a href="javascript:void(0)" role="menuitem">
+                  <span class="flag-icon flag-icon-cn"></span> Chinese</a>
+              </li>
+              <li role="presentation">
+                <a href="javascript:void(0)" role="menuitem">
+                  <span class="flag-icon flag-icon-de"></span> German</a>
+              </li>
+              <li role="presentation">
+                <a href="javascript:void(0)" role="menuitem">
+                  <span class="flag-icon flag-icon-nl"></span> Dutch</a>
+              </li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a class="navbar-avatar dropdown-toggle" data-toggle="dropdown" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#" aria-expanded="false" data-animation="scale-up" role="button">
+              <span class="avatar avatar-online">
+                <img src="./Message _ Remark Admin Template_files/5.jpg" alt="...">
+                <i></i>
+              </span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              <li role="presentation">
+                <a href="javascript:void(0)" role="menuitem"><i class="icon wb-user" aria-hidden="true"></i> Profile</a>
+              </li>
+              <li role="presentation">
+                <a href="javascript:void(0)" role="menuitem"><i class="icon wb-payment" aria-hidden="true"></i> Billing</a>
+              </li>
+              <li role="presentation">
+                <a href="javascript:void(0)" role="menuitem"><i class="icon wb-settings" aria-hidden="true"></i> Settings</a>
+              </li>
+              <li class="divider" role="presentation"></li>
+              <li role="presentation">
+                <a href="javascript:void(0)" role="menuitem"><i class="icon wb-power" aria-hidden="true"></i> Logout</a>
+              </li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a data-toggle="dropdown" href="javascript:void(0)" title="Notifications" aria-expanded="false" data-animation="scale-up" role="button">
+              <i class="icon wb-bell" aria-hidden="true"></i>
+              <span class="badge badge-danger up">5</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right dropdown-menu-media" role="menu">
+              <li class="dropdown-menu-header" role="presentation">
+                <h5>NOTIFICATIONS</h5>
+                <span class="label label-round label-danger">New 5</span>
+              </li>
+
+              <li class="list-group" role="presentation">
+                <div data-role="container">
+                  <div data-role="content">
+                    <a class="list-group-item" href="javascript:void(0)" role="menuitem">
+                      <div class="media">
+                        <div class="media-left padding-right-10">
+                          <i class="icon wb-order bg-red-600 white icon-circle" aria-hidden="true"></i>
+                        </div>
+                        <div class="media-body">
+                          <h6 class="media-heading">A new order has been placed</h6>
+                          <time class="media-meta" datetime="2016-06-12T20:50:48+08:00">5 hours ago</time>
+                        </div>
+                      </div>
+                    </a>
+                    <a class="list-group-item" href="javascript:void(0)" role="menuitem">
+                      <div class="media">
+                        <div class="media-left padding-right-10">
+                          <i class="icon wb-user bg-green-600 white icon-circle" aria-hidden="true"></i>
+                        </div>
+                        <div class="media-body">
+                          <h6 class="media-heading">Completed the task</h6>
+                          <time class="media-meta" datetime="2016-06-11T18:29:20+08:00">2 days ago</time>
+                        </div>
+                      </div>
+                    </a>
+                    <a class="list-group-item" href="javascript:void(0)" role="menuitem">
+                      <div class="media">
+                        <div class="media-left padding-right-10">
+                          <i class="icon wb-settings bg-red-600 white icon-circle" aria-hidden="true"></i>
+                        </div>
+                        <div class="media-body">
+                          <h6 class="media-heading">Settings updated</h6>
+                          <time class="media-meta" datetime="2016-06-11T14:05:00+08:00">2 days ago</time>
+                        </div>
+                      </div>
+                    </a>
+                    <a class="list-group-item" href="javascript:void(0)" role="menuitem">
+                      <div class="media">
+                        <div class="media-left padding-right-10">
+                          <i class="icon wb-calendar bg-blue-600 white icon-circle" aria-hidden="true"></i>
+                        </div>
+                        <div class="media-body">
+                          <h6 class="media-heading">Event started</h6>
+                          <time class="media-meta" datetime="2016-06-10T13:50:18+08:00">3 days ago</time>
+                        </div>
+                      </div>
+                    </a>
+                    <a class="list-group-item" href="javascript:void(0)" role="menuitem">
+                      <div class="media">
+                        <div class="media-left padding-right-10">
+                          <i class="icon wb-chat bg-orange-600 white icon-circle" aria-hidden="true"></i>
+                        </div>
+                        <div class="media-body">
+                          <h6 class="media-heading">Message received</h6>
+                          <time class="media-meta" datetime="2016-06-10T12:34:48+08:00">3 days ago</time>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </li>
+              <li class="dropdown-menu-footer" role="presentation">
+                <a class="dropdown-menu-footer-btn" href="javascript:void(0)" role="button">
+                  <i class="icon wb-settings" aria-hidden="true"></i>
+                </a>
+                <a href="javascript:void(0)" role="menuitem">
+                    All notifications
+                  </a>
+              </li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a data-toggle="dropdown" href="javascript:void(0)" title="Messages" aria-expanded="false" data-animation="scale-up" role="button">
+              <i class="icon wb-envelope" aria-hidden="true"></i>
+              <span class="badge badge-info up">3</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right dropdown-menu-media" role="menu">
+              <li class="dropdown-menu-header" role="presentation">
+                <h5>MESSAGES</h5>
+                <span class="label label-round label-info">New 3</span>
+              </li>
+
+              <li class="list-group" role="presentation">
+                <div data-role="container">
+                  <div data-role="content">
+                    <a class="list-group-item" href="javascript:void(0)" role="menuitem">
+                      <div class="media">
+                        <div class="media-left padding-right-10">
+                          <span class="avatar avatar-sm avatar-online">
+                            <img src="./Message _ Remark Admin Template_files/2.jpg" alt="...">
+                            <i></i>
+                          </span>
+                        </div>
+                        <div class="media-body">
+                          <h6 class="media-heading">Mary Adams</h6>
+                          <div class="media-meta">
+                            <time datetime="2016-06-17T20:22:05+08:00">30 minutes ago</time>
+                          </div>
+                          <div class="media-detail">Anyways, i would like just do it</div>
+                        </div>
+                      </div>
+                    </a>
+                    <a class="list-group-item" href="javascript:void(0)" role="menuitem">
+                      <div class="media">
+                        <div class="media-left padding-right-10">
+                          <span class="avatar avatar-sm avatar-off">
+                            <img src="./Message _ Remark Admin Template_files/3.jpg" alt="...">
+                            <i></i>
+                          </span>
+                        </div>
+                        <div class="media-body">
+                          <h6 class="media-heading">Caleb Richards</h6>
+                          <div class="media-meta">
+                            <time datetime="2016-06-17T12:30:30+08:00">12 hours ago</time>
+                          </div>
+                          <div class="media-detail">I checheck the document. But there seems</div>
+                        </div>
+                      </div>
+                    </a>
+                    <a class="list-group-item" href="javascript:void(0)" role="menuitem">
+                      <div class="media">
+                        <div class="media-left padding-right-10">
+                          <span class="avatar avatar-sm avatar-busy">
+                            <img src="./Message _ Remark Admin Template_files/4.jpg" alt="...">
+                            <i></i>
+                          </span>
+                        </div>
+                        <div class="media-body">
+                          <h6 class="media-heading">June Lane</h6>
+                          <div class="media-meta">
+                            <time datetime="2016-06-16T18:38:40+08:00">2 days ago</time>
+                          </div>
+                          <div class="media-detail">Lorem ipsum Id consectetur et minim</div>
+                        </div>
+                      </div>
+                    </a>
+                    <a class="list-group-item" href="javascript:void(0)" role="menuitem">
+                      <div class="media">
+                        <div class="media-left padding-right-10">
+                          <span class="avatar avatar-sm avatar-away">
+                            <img src="./Message _ Remark Admin Template_files/5.jpg" alt="...">
+                            <i></i>
+                          </span>
+                        </div>
+                        <div class="media-body">
+                          <h6 class="media-heading">Edward Fletcher</h6>
+                          <div class="media-meta">
+                            <time datetime="2016-06-15T20:34:48+08:00">3 days ago</time>
+                          </div>
+                          <div class="media-detail">Dolor et irure cupidatat commodo nostrud nostrud.</div>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </li>
+              <li class="dropdown-menu-footer" role="presentation">
+                <a class="dropdown-menu-footer-btn" href="javascript:void(0)" role="button">
+                  <i class="icon wb-settings" aria-hidden="true"></i>
+                </a>
+                <a href="javascript:void(0)" role="menuitem">
+                    See all messages
+                  </a>
+              </li>
+            </ul>
+          </li>
+          <li id="toggleChat">
+            <a data-toggle="site-sidebar" href="javascript:void(0)" title="Chat" data-url="../../site-sidebar.tpl">
+              <i class="icon wb-chat" aria-hidden="true"></i>
+            </a>
+          </li>
+        </ul>
+        <!-- End Navbar Toolbar Right -->
+      </div>
+      <!-- End Navbar Collapse -->
+
+      <!-- Site Navbar Seach -->
+      <div class="collapse navbar-search-overlap" id="site-navbar-search">
+        <form role="search">
+          <div class="form-group">
+            <div class="input-search">
+              <i class="input-search-icon wb-search" aria-hidden="true"></i>
+              <input type="text" class="form-control" name="site-search" placeholder="Search...">
+              <button type="button" class="input-search-close icon wb-close" data-target="#site-navbar-search" data-toggle="collapse" aria-label="Close"></button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- End Site Navbar Seach -->
+    </div>
+  </nav>
+  <div class="site-menubar mm-menu mm-hasnavbar-bottom-1"><div class="mm-navbar mm-navbar-bottom mm-navbar-bottom-1 mm-navbar-size-1"><div class="site-menubar-footer"><a href="javascript: void(0);" class="fold-show" data-placement="top" data-toggle="tooltip" data-original-title="Settings"><span class="icon wb-settings" aria-hidden="true"></span></a><a href="javascript: void(0);" data-placement="top" data-toggle="tooltip" data-original-title="Lock"><span class="icon wb-eye-close" aria-hidden="true"></span></a><a href="javascript: void(0);" data-placement="top" data-toggle="tooltip" data-original-title="Logout"><span class="icon wb-power" aria-hidden="true"></span></a></div></div><div class="mm-panels"><div class="mm-panel mm-hasnavbar mm-opened mm-current" id="mm-0"><div class="mm-navbar"><a class="mm-title">Menu</a></div><ul class="site-menu mm-listview">
+      <li class="site-menu-item has-sub">
+        <a class="mm-next" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-1" data-target="#mm-1"></a><a href="javascript:void(0)">
+          <i class="site-menu-icon wb-dashboard" aria-hidden="true"></i>
+          <span class="site-menu-title">Dashboard</span>
+          <div class="site-menu-badge">
+            <span class="badge badge-success">2</span>
+          </div>
+        </a>
+        
+      </li>
+      <li class="site-menu-item has-sub">
+        <a class="mm-next" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-2" data-target="#mm-2"></a><a href="javascript:void(0)">
+          <i class="site-menu-icon wb-layout" aria-hidden="true"></i>
+          <span class="site-menu-title">Layouts</span>
+          <span class="site-menu-arrow"></span>
+        </a>
+        
+      </li>
+      <li class="site-menu-item has-sub">
+        <a class="mm-next" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-3" data-target="#mm-3"></a><a href="javascript:void(0)">
+          <i class="site-menu-icon wb-file" aria-hidden="true"></i>
+          <span class="site-menu-title">Pages</span>
+          <span class="site-menu-arrow"></span>
+        </a>
+        
+      </li>
+      <li class="site-menu-item has-sub">
+        <a class="mm-next" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-6" data-target="#mm-6"></a><a href="javascript:void(0)">
+          <i class="site-menu-icon wb-bookmark" aria-hidden="true"></i>
+          <span class="site-menu-title">Basic UI</span>
+          <span class="site-menu-arrow"></span>
+        </a>
+        
+      </li>
+      <li class="site-menu-item has-sub">
+        <a class="mm-next" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-8" data-target="#mm-8"></a><a href="javascript:void(0)">
+          <i class="site-menu-icon wb-hammer" aria-hidden="true"></i>
+          <span class="site-menu-title">Advanced UI</span>
+          <span class="site-menu-arrow"></span>
+        </a>
+        
+      </li>
+      <li class="site-menu-item has-sub">
+        <a class="mm-next" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-9" data-target="#mm-9"></a><a href="javascript:void(0)">
+          <i class="site-menu-icon wb-plugin" aria-hidden="true"></i>
+          <span class="site-menu-title">Structure</span>
+          <span class="site-menu-arrow"></span>
+        </a>
+        
+      </li>
+      <li class="site-menu-item has-sub">
+        <a class="mm-next" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-10" data-target="#mm-10"></a><a href="javascript:void(0)">
+          <i class="site-menu-icon wb-extension" aria-hidden="true"></i>
+          <span class="site-menu-title">Widgets</span>
+          <span class="site-menu-arrow"></span>
+        </a>
+        
+      </li>
+      <li class="site-menu-item has-sub">
+        <a class="mm-next" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-11" data-target="#mm-11"></a><a href="javascript:void(0)">
+          <i class="site-menu-icon wb-library" aria-hidden="true"></i>
+          <span class="site-menu-title">Forms</span>
+          <span class="site-menu-arrow"></span>
+        </a>
+        
+      </li>
+      <li class="site-menu-item has-sub">
+        <a class="mm-next" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-13" data-target="#mm-13"></a><a href="javascript:void(0)">
+          <i class="site-menu-icon wb-table" aria-hidden="true"></i>
+          <span class="site-menu-title">Tables</span>
+          <span class="site-menu-arrow"></span>
+        </a>
+        
+      </li>
+      <li class="site-menu-item has-sub">
+        <a class="mm-next" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-14" data-target="#mm-14"></a><a href="javascript:void(0)">
+          <i class="site-menu-icon wb-pie-chart" aria-hidden="true"></i>
+          <span class="site-menu-title">Chart</span>
+          <span class="site-menu-arrow"></span>
+        </a>
+        
+      </li>
+      <li class="site-menu-item has-sub active open">
+        <a class="mm-next" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-15" data-target="#mm-15"></a><a href="javascript:void(0)">
+          <i class="site-menu-icon wb-grid-4" aria-hidden="true"></i>
+          <span class="site-menu-title">Apps</span>
+          <span class="site-menu-arrow"></span>
+        </a>
+        
+      </li>
+    </ul></div><div class="mm-panel mm-hasnavbar mm-hidden" id="mm-1"><div class="mm-navbar"><a class="mm-btn mm-prev" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-0" data-target="#mm-0"></a><a class="mm-title" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-0">
+          
+          Dashboard
+          
+            2
+          
+        </a></div><ul class="site-menu-sub mm-listview">
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/index.html">
+              <span class="site-menu-title">Dashboard v1</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/dashboard/v2.html">
+              <span class="site-menu-title">Dashboard v2</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/dashboard/ecommerce.html">
+              <span class="site-menu-title">Ecommerce</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/dashboard/analytics.html">
+              <span class="site-menu-title">Analytics</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/dashboard/team.html">
+              <span class="site-menu-title">Team</span>
+            </a>
+          </li>
+        </ul></div><div class="mm-panel mm-hasnavbar mm-hidden" id="mm-2"><div class="mm-navbar"><a class="mm-btn mm-prev" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-0" data-target="#mm-0"></a><a class="mm-title" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-0">
+          
+          Layouts
+          
+        </a></div><ul class="site-menu-sub mm-listview">
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/layouts/menu-collapsed.html">
+              <span class="site-menu-title">Menu Collapsed</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/layouts/menu-expended.html">
+              <span class="site-menu-title">Menu Expended</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/layouts/grids.html">
+              <span class="site-menu-title">Grid Scaffolding</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/layouts/layout-grid.html">
+              <span class="site-menu-title">Layout Grid</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/layouts/headers.html">
+              <span class="site-menu-title">Different Headers</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/layouts/panel-transition.html">
+              <span class="site-menu-title">Panel Transition</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/layouts/boxed.html">
+              <span class="site-menu-title">Boxed Layout</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/layouts/two-columns.html">
+              <span class="site-menu-title">Two Columns</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/layouts/bordered-header.html">
+              <span class="site-menu-title">Bordered Header</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/layouts/page-aside-fixed.html">
+              <span class="site-menu-title">Page Aside Fixed</span>
+            </a>
+          </li>
+        </ul></div><div class="mm-panel mm-hasnavbar mm-hidden" id="mm-3"><div class="mm-navbar"><a class="mm-btn mm-prev" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-0" data-target="#mm-0"></a><a class="mm-title" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-0">
+          
+          Pages
+          
+        </a></div><ul class="site-menu-sub mm-listview">
+          <li class="site-menu-item has-sub">
+            <a class="mm-next" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-4" data-target="#mm-4"></a><a href="javascript:void(0)">
+              <span class="site-menu-title">Errors</span>
+              <span class="site-menu-arrow"></span>
+            </a>
+            
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/pages/faq.html">
+              <span class="site-menu-title">FAQ</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/pages/gallery.html">
+              <span class="site-menu-title">Gallery</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/pages/gallery-grid.html">
+              <span class="site-menu-title">Gallery Grid</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/pages/search-result.html">
+              <span class="site-menu-title">Search Result</span>
+            </a>
+          </li>
+          <li class="site-menu-item has-sub">
+            <a class="mm-next" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-5" data-target="#mm-5"></a><a href="javascript:void(0)">
+              <span class="site-menu-title">Maps</span>
+              <span class="site-menu-arrow"></span>
+            </a>
+            
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/pages/maintenance.html">
+              <span class="site-menu-title">Maintenance</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/pages/forgot-password.html">
+              <span class="site-menu-title">Forgot Password</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/pages/lockscreen.html">
+              <span class="site-menu-title">Lockscreen</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/pages/login.html">
+              <span class="site-menu-title">Login</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/pages/register.html">
+              <span class="site-menu-title">Register</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/pages/login-v2.html">
+              <span class="site-menu-title">Login V2</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/pages/register-v2.html">
+              <span class="site-menu-title">Register V2</span>
+              <div class="site-menu-label">
+                <span class="label label-info label-round">new</span>
+              </div>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/pages/login-v3.html">
+              <span class="site-menu-title">Login V3</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/pages/register-v3.html">
+              <span class="site-menu-title">Register V3</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/pages/user.html">
+              <span class="site-menu-title">User List</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/pages/invoice.html">
+              <span class="site-menu-title">Invoice</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/pages/blank.html">
+              <span class="site-menu-title">Blank Page</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/pages/email.html">
+              <span class="site-menu-title">Email</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/pages/code-editor.html">
+              <span class="site-menu-title">Code Editor</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/pages/profile.html">
+              <span class="site-menu-title">Profile</span>
+            </a>
+          </li>
+        </ul></div><div class="mm-panel mm-hasnavbar mm-hidden" id="mm-4"><div class="mm-navbar"><a class="mm-btn mm-prev" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-3" data-target="#mm-3"></a><a class="mm-title" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-3">
+              Errors
+              
+            </a></div><ul class="site-menu-sub mm-listview">
+              <li class="site-menu-item">
+                <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/pages/error-400.html">
+                  <span class="site-menu-title">400</span>
+                </a>
+              </li>
+              <li class="site-menu-item">
+                <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/pages/error-403.html">
+                  <span class="site-menu-title">403</span>
+                </a>
+              </li>
+              <li class="site-menu-item">
+                <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/pages/error-404.html">
+                  <span class="site-menu-title">404</span>
+                </a>
+              </li>
+              <li class="site-menu-item">
+                <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/pages/error-500.html">
+                  <span class="site-menu-title">500</span>
+                </a>
+              </li>
+              <li class="site-menu-item">
+                <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/pages/error-503.html">
+                  <span class="site-menu-title">503</span>
+                </a>
+              </li>
+            </ul></div><div class="mm-panel mm-hasnavbar mm-hidden" id="mm-5"><div class="mm-navbar"><a class="mm-btn mm-prev" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-3" data-target="#mm-3"></a><a class="mm-title" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-3">
+              Maps
+              
+            </a></div><ul class="site-menu-sub mm-listview">
+              <li class="site-menu-item">
+                <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/pages/map-google.html">
+                  <span class="site-menu-title">Google Maps</span>
+                </a>
+              </li>
+              <li class="site-menu-item">
+                <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/pages/map-vector.html">
+                  <span class="site-menu-title">Vector Maps</span>
+                </a>
+              </li>
+            </ul></div><div class="mm-panel mm-hasnavbar mm-hidden" id="mm-6"><div class="mm-navbar"><a class="mm-btn mm-prev" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-0" data-target="#mm-0"></a><a class="mm-title" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-0">
+          
+          Basic UI
+          
+        </a></div><ul class="site-menu-sub mm-listview">
+          <li class="site-menu-item has-sub">
+            <a class="mm-next" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-7" data-target="#mm-7"></a><a href="javascript:void(0)">
+              <span class="site-menu-title">Panel</span>
+              <span class="site-menu-arrow"></span>
+            </a>
+            
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/uikit/buttons.html">
+              <span class="site-menu-title">Buttons</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/uikit/dropdowns.html">
+              <span class="site-menu-title">Dropdowns</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/uikit/icons.html">
+              <span class="site-menu-title">Icons</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/uikit/list.html">
+              <span class="site-menu-title">List</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/uikit/tooltip-popover.html">
+              <span class="site-menu-title">Tooltip &amp; Popover</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/uikit/modals.html">
+              <span class="site-menu-title">Modals</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/uikit/tabs-accordions.html">
+              <span class="site-menu-title">Tabs &amp; Accordions</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/uikit/images.html">
+              <span class="site-menu-title">Images</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/uikit/badges-labels.html">
+              <span class="site-menu-title">Badges &amp; Labels</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/uikit/progress-bars.html">
+              <span class="site-menu-title">Progress Bars</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/uikit/carousel.html">
+              <span class="site-menu-title">Carousel</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/uikit/typography.html">
+              <span class="site-menu-title">Typography</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/uikit/colors.html">
+              <span class="site-menu-title">Colors</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/uikit/utilities.html">
+              <span class="site-menu-title">Utilties</span>
+            </a>
+          </li>
+        </ul></div><div class="mm-panel mm-hasnavbar mm-hidden" id="mm-7"><div class="mm-navbar"><a class="mm-btn mm-prev" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-6" data-target="#mm-6"></a><a class="mm-title" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-6">
+              Panel
+              
+            </a></div><ul class="site-menu-sub mm-listview">
+              <li class="site-menu-item">
+                <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/uikit/panel-structure.html">
+                  <span class="site-menu-title">Panel Structure</span>
+                </a>
+              </li>
+              <li class="site-menu-item">
+                <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/uikit/panel-actions.html">
+                  <span class="site-menu-title">Panel Actions</span>
+                </a>
+              </li>
+              <li class="site-menu-item">
+                <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/uikit/panel-portlets.html">
+                  <span class="site-menu-title">Panel Portlets</span>
+                </a>
+              </li>
+            </ul></div><div class="mm-panel mm-hasnavbar mm-hidden" id="mm-8"><div class="mm-navbar"><a class="mm-btn mm-prev" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-0" data-target="#mm-0"></a><a class="mm-title" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-0">
+          
+          Advanced UI
+          
+        </a></div><ul class="site-menu-sub mm-listview">
+          <li class="site-menu-item hidden-xs site-tour-trigger">
+            <a href="javascript:void(0)">
+              <span class="site-menu-title">Tour</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/advanced/animation.html">
+              <span class="site-menu-title">Animation</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/advanced/highlight.html">
+              <span class="site-menu-title">Highlight</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/advanced/lightbox.html">
+              <span class="site-menu-title">Lightbox</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/advanced/scrollable.html">
+              <span class="site-menu-title">Scrollable</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/advanced/rating.html">
+              <span class="site-menu-title">Rating</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/advanced/context-menu.html">
+              <span class="site-menu-title">Context Menu</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/advanced/alertify.html">
+              <span class="site-menu-title">Alertify</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/advanced/masonry.html">
+              <span class="site-menu-title">Masonry</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/advanced/treeview.html">
+              <span class="site-menu-title">Treeview</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/advanced/toastr.html">
+              <span class="site-menu-title">Toastr</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/advanced/maps-vector.html">
+              <span class="site-menu-title">Vector Maps</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/advanced/maps-google.html">
+              <span class="site-menu-title">Google Maps</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/advanced/sortable-nestable.html">
+              <span class="site-menu-title">Sortable &amp; Nestable</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/advanced/bootbox-sweetalert.html">
+              <span class="site-menu-title">Bootbox &amp; Sweetalert</span>
+            </a>
+          </li>
+        </ul></div><div class="mm-panel mm-hasnavbar mm-hidden" id="mm-9"><div class="mm-navbar"><a class="mm-btn mm-prev" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-0" data-target="#mm-0"></a><a class="mm-title" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-0">
+          
+          Structure
+          
+        </a></div><ul class="site-menu-sub mm-listview">
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/structure/alerts.html">
+              <span class="site-menu-title">Alerts</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/structure/ribbon.html">
+              <span class="site-menu-title">Ribbon</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/structure/pricing-tables.html">
+              <span class="site-menu-title">Pricing Tables</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/structure/overlay.html">
+              <span class="site-menu-title">Overlay</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/structure/cover.html">
+              <span class="site-menu-title">Cover</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/structure/timeline-simple.html">
+              <span class="site-menu-title">Simple Timeline</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/structure/timeline.html">
+              <span class="site-menu-title">Timeline</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/structure/step.html">
+              <span class="site-menu-title">Step</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/structure/comments.html">
+              <span class="site-menu-title">Comments</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/structure/media.html">
+              <span class="site-menu-title">Media</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/structure/chat.html">
+              <span class="site-menu-title">Chat</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/structure/testimonials.html">
+              <span class="site-menu-title">Testimonials</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/structure/nav.html">
+              <span class="site-menu-title">Nav</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/structure/navbars.html">
+              <span class="site-menu-title">Navbars</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/structure/blockquotes.html">
+              <span class="site-menu-title">Blockquotes</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/structure/pagination.html">
+              <span class="site-menu-title">Pagination</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/structure/breadcrumbs.html">
+              <span class="site-menu-title">Breadcrumbs</span>
+            </a>
+          </li>
+        </ul></div><div class="mm-panel mm-hasnavbar mm-hidden" id="mm-10"><div class="mm-navbar"><a class="mm-btn mm-prev" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-0" data-target="#mm-0"></a><a class="mm-title" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-0">
+          
+          Widgets
+          
+        </a></div><ul class="site-menu-sub mm-listview">
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/widgets/statistics.html">
+              <span class="site-menu-title">Statistics Widgets</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/widgets/data.html">
+              <span class="site-menu-title">Data Widgets</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/widgets/blog.html">
+              <span class="site-menu-title">Blog Widgets</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/widgets/chart.html">
+              <span class="site-menu-title">Chart Widgets</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/widgets/social.html">
+              <span class="site-menu-title">Social Widgets</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/widgets/weather.html">
+              <span class="site-menu-title">Weather Widgets</span>
+            </a>
+          </li>
+        </ul></div><div class="mm-panel mm-hasnavbar mm-hidden" id="mm-11"><div class="mm-navbar"><a class="mm-btn mm-prev" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-0" data-target="#mm-0"></a><a class="mm-title" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-0">
+          
+          Forms
+          
+        </a></div><ul class="site-menu-sub mm-listview">
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/forms/general.html">
+              <span class="site-menu-title">General Elements</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/forms/material.html">
+              <span class="site-menu-title">Material Elements</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/forms/advanced.html">
+              <span class="site-menu-title">Advanced Elements</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/forms/layouts.html">
+              <span class="site-menu-title">Form Layouts</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/forms/wizard.html">
+              <span class="site-menu-title">Form Wizard</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/forms/validation.html">
+              <span class="site-menu-title">Form Validation</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/forms/masks.html">
+              <span class="site-menu-title">Form Masks</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/forms/editable.html">
+              <span class="site-menu-title">Form Editable</span>
+            </a>
+          </li>
+          <li class="site-menu-item has-sub">
+            <a class="mm-next" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-12" data-target="#mm-12"></a><a href="javascript:void(0)">
+              <span class="site-menu-title">Editors</span>
+              <span class="site-menu-arrow"></span>
+            </a>
+            
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/forms/image-cropping.html">
+              <span class="site-menu-title">Image Cropping</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/forms/file-uploads.html">
+              <span class="site-menu-title">File Uploads</span>
+            </a>
+          </li>
+        </ul></div><div class="mm-panel mm-hasnavbar mm-hidden" id="mm-12"><div class="mm-navbar"><a class="mm-btn mm-prev" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-11" data-target="#mm-11"></a><a class="mm-title" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-11">
+              Editors
+              
+            </a></div><ul class="site-menu-sub mm-listview">
+              <li class="site-menu-item">
+                <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/forms/editor-summernote.html">
+                  <span class="site-menu-title">Summernote</span>
+                </a>
+              </li>
+              <li class="site-menu-item">
+                <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/forms/editor-markdown.html">
+                  <span class="site-menu-title">Markdown</span>
+                </a>
+              </li>
+              <li class="site-menu-item">
+                <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/forms/editor-ace.html">
+                  <span class="site-menu-title">Ace Editor</span>
+                </a>
+              </li>
+            </ul></div><div class="mm-panel mm-hasnavbar mm-hidden" id="mm-13"><div class="mm-navbar"><a class="mm-btn mm-prev" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-0" data-target="#mm-0"></a><a class="mm-title" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-0">
+          
+          Tables
+          
+        </a></div><ul class="site-menu-sub mm-listview">
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/tables/basic.html">
+              <span class="site-menu-title">Basic Tables</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/tables/bootstrap.html">
+              <span class="site-menu-title">Bootstrap Tables</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/tables/floatthead.html">
+              <span class="site-menu-title">floatThead</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/tables/responsive.html">
+              <span class="site-menu-title">Responsive Tables</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/tables/editable.html">
+              <span class="site-menu-title">Editable Tables</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/tables/jsgrid.html">
+              <span class="site-menu-title">jsGrid</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/tables/footable.html">
+              <span class="site-menu-title">FooTable</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/tables/datatable.html">
+              <span class="site-menu-title">DataTables</span>
+            </a>
+          </li>
+        </ul></div><div class="mm-panel mm-hasnavbar mm-hidden" id="mm-14"><div class="mm-navbar"><a class="mm-btn mm-prev" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-0" data-target="#mm-0"></a><a class="mm-title" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-0">
+          
+          Chart
+          
+        </a></div><ul class="site-menu-sub mm-listview">
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/charts/chartjs.html">
+              <span class="site-menu-title">Chart.js</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/charts/gauges.html">
+              <span class="site-menu-title">Gauges</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/charts/flot.html">
+              <span class="site-menu-title">Flot</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/charts/peity.html">
+              <span class="site-menu-title">Peity</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/charts/sparkline.html">
+              <span class="site-menu-title">Sparkline</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/charts/morris.html">
+              <span class="site-menu-title">Morris</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/charts/chartist.html">
+              <span class="site-menu-title">Chartist.js</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/charts/rickshaw.html">
+              <span class="site-menu-title">Rickshaw</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/charts/pie-progress.html">
+              <span class="site-menu-title">Pie Progress</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/charts/c3.html">
+              <span class="site-menu-title">C3</span>
+            </a>
+          </li>
+        </ul></div><div class="mm-panel mm-hasnavbar mm-hidden" id="mm-15"><div class="mm-navbar"><a class="mm-btn mm-prev" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-0" data-target="#mm-0"></a><a class="mm-title" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-0">
+          
+          Apps
+          
+        </a></div><ul class="site-menu-sub mm-listview">
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/apps/contacts/contacts.html">
+              <span class="site-menu-title">Contacts</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/apps/calendar/calendar.html">
+              <span class="site-menu-title">Calendar</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/apps/notebook/notebook.html">
+              <span class="site-menu-title">Notebook</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/apps/taskboard/taskboard.html">
+              <span class="site-menu-title">Taskboard</span>
+            </a>
+          </li>
+          <li class="site-menu-item has-sub">
+            <a class="mm-next" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-16" data-target="#mm-16"></a><a href="javascript:void(0)">
+              <span class="site-menu-title">Documents</span>
+              <span class="site-menu-arrow"></span>
+            </a>
+            
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/apps/forum/forum.html">
+              <span class="site-menu-title">Forum</span>
+            </a>
+          </li>
+          <li class="site-menu-item active">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html">
+              <span class="site-menu-title">Message</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/apps/projects/projects.html">
+              <span class="site-menu-title">Projects</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/apps/mailbox/mailbox.html">
+              <span class="site-menu-title">Mailbox</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/apps/media/overview.html">
+              <span class="site-menu-title">Media</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/apps/work/work.html">
+              <span class="site-menu-title">Work</span>
+            </a>
+          </li>
+          <li class="site-menu-item">
+            <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/apps/location/location.html">
+              <span class="site-menu-title">Location</span>
+            </a>
+          </li>
+        </ul></div><div class="mm-panel mm-hasnavbar mm-hidden" id="mm-16"><div class="mm-navbar"><a class="mm-btn mm-prev" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-15" data-target="#mm-15"></a><a class="mm-title" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#mm-15">
+              Documents
+              
+            </a></div><ul class="site-menu-sub mm-listview">
+              <li class="site-menu-item">
+                <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/apps/documents/articles.html">
+                  <span class="site-menu-title">Articles</span>
+                </a>
+              </li>
+              <li class="site-menu-item">
+                <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/apps/documents/categories.html">
+                  <span class="site-menu-title">Categories</span>
+                </a>
+              </li>
+              <li class="site-menu-item">
+                <a class="animsition-link" href="http://getbootstrapadmin.com/remark/mmenu/apps/documents/article.html">
+                  <span class="site-menu-title">Article</span>
+                </a>
+              </li>
+            </ul></div></div></div>
+  <div class="site-gridmenu">
+    <div>
+      <div>
+        <ul>
+          <li>
+            <a href="http://getbootstrapadmin.com/remark/mmenu/apps/mailbox/mailbox.html">
+              <i class="icon wb-envelope"></i>
+              <span>Mailbox</span>
+            </a>
+          </li>
+          <li>
+            <a href="http://getbootstrapadmin.com/remark/mmenu/apps/calendar/calendar.html">
+              <i class="icon wb-calendar"></i>
+              <span>Calendar</span>
+            </a>
+          </li>
+          <li>
+            <a href="http://getbootstrapadmin.com/remark/mmenu/apps/contacts/contacts.html">
+              <i class="icon wb-user"></i>
+              <span>Contacts</span>
+            </a>
+          </li>
+          <li>
+            <a href="http://getbootstrapadmin.com/remark/mmenu/apps/media/overview.html">
+              <i class="icon wb-camera"></i>
+              <span>Media</span>
+            </a>
+          </li>
+          <li>
+            <a href="http://getbootstrapadmin.com/remark/mmenu/apps/documents/categories.html">
+              <i class="icon wb-order"></i>
+              <span>Documents</span>
+            </a>
+          </li>
+          <li>
+            <a href="http://getbootstrapadmin.com/remark/mmenu/apps/projects/projects.html">
+              <i class="icon wb-image"></i>
+              <span>Project</span>
+            </a>
+          </li>
+          <li>
+            <a href="http://getbootstrapadmin.com/remark/mmenu/apps/forum/forum.html">
+              <i class="icon wb-chat-group"></i>
+              <span>Forum</span>
+            </a>
+          </li>
+          <li>
+            <a href="http://getbootstrapadmin.com/remark/mmenu/index.html">
+              <i class="icon wb-dashboard"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="page animsition" style="animation-duration: 800ms; opacity: 1;">
+    <!-- Message Sidebar -->
+    <div class="page-aside">
+      <div class="page-aside-switch">
+        <i class="icon wb-chevron-left" aria-hidden="true"></i>
+        <i class="icon wb-chevron-right" aria-hidden="true"></i>
+      </div>
+      <div class="page-aside-inner">
+        <div class="input-search">
+          <button class="input-search-btn" type="submit">
+            <i class="icon wb-search" aria-hidden="true"></i>
+          </button>
+          <form>
+            <input class="form-control" type="text" placeholder="Search Keyword" name="">
+          </form>
+        </div>
+
+        <div class="app-message-list scrollable is-enabled scrollable-vertical" data-plugin="pageAsideScroll" style="position: relative;">
+          <div data-role="container" class="scrollable-container" style="height: 463px; width: 276px;">
+            <div data-role="content" class="scrollable-content" style="width: 259px;">
+              <ul class="list-group">
+                <li class="list-group-item">
+                  <div class="media">
+                    <div class="media-left">
+                      <a class="avatar avatar-online" href="javascript:void(0)">
+                        <img class="img-responsive" src="./Message _ Remark Admin Template_files/1.jpg" alt="..."><i></i></a>
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading">Kerem Sure</h4>
+                      <span class="media-time">15 sec ago</span>
+                    </div>
+                    <div class="media-right">
+                      <span class="badge badge-danger">3</span>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div class="media">
+                    <div class="media-left">
+                      <a class="avatar avatar-online" href="javascript:void(0)">
+                        <img class="img-responsive" src="./Message _ Remark Admin Template_files/2.jpg" alt="..."><i></i></a>
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading">Eric hoffman</h4>
+                      <span class="media-time">1 minutes ago</span>
+                    </div>
+                    <div class="media-right">
+                      <span class="badge badge-danger"></span>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div class="media">
+                    <div class="media-left">
+                      <a class="avatar avatar-online" href="javascript:void(0)">
+                        <img class="img-responsive" src="./Message _ Remark Admin Template_files/3.jpg" alt="..."><i></i></a>
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading">Eddie Lobanovskiy</h4>
+                      <span class="media-time">5 minutes ago</span>
+                    </div>
+                    <div class="media-right">
+                      <span class="badge badge-danger"></span>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div class="media">
+                    <div class="media-left">
+                      <a class="avatar avatar-online" href="javascript:void(0)">
+                        <img class="img-responsive" src="./Message _ Remark Admin Template_files/4.jpg" alt="..."><i></i></a>
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading">Bill S Kenney</h4>
+                      <span class="media-time">15 minutes ago</span>
+                    </div>
+                    <div class="media-right">
+                      <span class="badge badge-danger">5</span>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item active">
+                  <div class="media">
+                    <div class="media-left">
+                      <a class="avatar avatar-away" href="javascript:void(0)">
+                        <img class="img-responsive" src="./Message _ Remark Admin Template_files/5.jpg" alt="..."><i></i></a>
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading">Derek Bradley</h4>
+                      <span class="media-time">40 minutes ago</span>
+                    </div>
+                    <div class="media-right">
+                      <span class="badge badge-danger"></span>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div class="media">
+                    <div class="media-left">
+                      <a class="avatar avatar-away" href="javascript:void(0)">
+                        <img class="img-responsive" src="./Message _ Remark Admin Template_files/6.jpg" alt="..."><i></i></a>
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading">Mariusz Ciesla</h4>
+                      <span class="media-time">2 hours ago</span>
+                    </div>
+                    <div class="media-right">
+                      <span class="badge badge-danger"></span>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div class="media">
+                    <div class="media-left">
+                      <a class="avatar avatar-online" href="javascript:void(0)">
+                        <img class="img-responsive" src="./Message _ Remark Admin Template_files/7.jpg" alt="..."><i></i></a>
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading">Jesse Dodds</h4>
+                      <span class="media-time">3 hours ago</span>
+                    </div>
+                    <div class="media-right">
+                      <span class="badge badge-danger"></span>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div class="media">
+                    <div class="media-left">
+                      <a class="avatar avatar-off" href="javascript:void(0)">
+                        <img class="img-responsive" src="./Message _ Remark Admin Template_files/8.jpg" alt="..."><i></i></a>
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading">Gerren Lamson</h4>
+                      <span class="media-time">3 hours ago</span>
+                    </div>
+                    <div class="media-right">
+                      <span class="badge badge-danger"></span>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div class="media">
+                    <div class="media-left">
+                      <a class="avatar avatar-off" href="javascript:void(0)">
+                        <img class="img-responsive" src="./Message _ Remark Admin Template_files/9.jpg" alt="..."><i></i></a>
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading">Daniel Waldron</h4>
+                      <span class="media-time">5 hours ago</span>
+                    </div>
+                    <div class="media-right">
+                      <span class="badge badge-danger"></span>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div class="media">
+                    <div class="media-left">
+                      <a class="avatar avatar-off" href="javascript:void(0)">
+                        <img class="img-responsive" src="./Message _ Remark Admin Template_files/10.jpg" alt="..."><i></i></a>
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading">Celikovic</h4>
+                      <span class="media-time">7 hours ago</span>
+                    </div>
+                    <div class="media-right">
+                      <span class="badge badge-danger"></span>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        <div class="scrollable-bar scrollable-bar-vertical scrollable-bar-hide" draggable="false"><div class="scrollable-bar-handle" style="height: 256.596px;"></div></div></div>
+      </div>
+    </div>
+    <!-- End Message Sidebar -->
+    <div class="page-main">
+      <!-- Chat Box -->
+      <div class="app-message-chats" style="height: calc(100% - 96px);">
+        <button type="button" id="historyBtn" class="btn btn-round btn-outline btn-default">History Messages</button>
+
+				<div class="chats">
+					<div ng-repeat="message in messageList" ng-class-odd="'chat'" ng-class-even="'chat chat-left'">
+            <div class="chat-avatar">
+              <a class="avatar" data-toggle="tooltip" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#" data-placement="{{($even)? 'right' : 'left' }}" title="" data-original-title="">
+                <img src="{{'./Message _ Remark Admin Template_files/' + (($even)? '4' : '5') + '.jpg'}}" alt="{{($even)? 'June Lane' : 'Edward Fletcher'">
+              </a>
+            </div>
+            <div class="chat-body">
+              <div class="chat-content">
+                <p>
+                  {{message.text}}
+                </p>
+              </div>
+            </div>
+					</div>
+				</div>
+			</div>
+      <!-- End Chat Box -->
+
+      <!-- Message Input-->
+      <form class="app-message-input">
+        <div class="message-input">
+          <input type="text" class="form-control" rows="1" style="overflow: hidden; word-wrap: break-word; height: 36px;" ng-model="currentMsg" ng-keyup="$event.keyCode === 13 && sendMessage()"></input>
+          <div class="message-input-actions btn-group">
+            <button class="btn btn-pure btn-icon btn-default" type="button">
+              <i class="icon wb-emoticon" aria-hidden="true"></i>
+            </button>
+            <button class="btn btn-pure btn-icon btn-default" type="button">
+              <i class="icon wb-image" aria-hidden="true"></i>
+            </button>
+            <button class="btn btn-pure btn-icon btn-default" type="button">
+              <i class="icon wb-paperclip" aria-hidden="true"></i>
+            </button>
+            <input id="messageImage" type="file" name="messageImage">
+            <input id="messageFile" type="file" name="messageFile">
+          </div>
+        </div>
+        <button class="message-input-btn btn btn-primary" type="button" ng-click="sendMessage()">SEND</button>
+      </form>
+      <!-- End Message Input-->
+
+    </div>
+  </div>
+
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="site-footer-legal">© 2016 <a href="http://themeforest.net/item/remark-responsive-bootstrap-admin-template/11989202">Remark</a></div>
+    <div class="site-footer-right">
+      Crafted with <i class="red-600 wb wb-heart"></i> by <a href="http://themeforest.net/user/amazingSurge">amazingSurge</a>
+    </div>
+  </footer>
+  <!-- Core  -->
+  <script src="./Message _ Remark Admin Template_files/jquery.min.js"></script>
+  <script src="./Message _ Remark Admin Template_files/bootstrap.min.js"></script>
+  <script src="./Message _ Remark Admin Template_files/animsition.min.js"></script>
+  <script src="./Message _ Remark Admin Template_files/jquery-asScroll.min.js"></script>
+  <script src="./Message _ Remark Admin Template_files/jquery.mousewheel.min.js"></script>
+  <script src="./Message _ Remark Admin Template_files/jquery.asScrollable.all.min.js"></script>
+  <script src="./Message _ Remark Admin Template_files/jquery-asHoverScroll.min.js"></script>
+
+  <!-- Plugins -->
+  <script src="./Message _ Remark Admin Template_files/jquery.mmenu.min.all.js"></script>
+  <script src="./Message _ Remark Admin Template_files/switchery.min.js"></script>
+  <script src="./Message _ Remark Admin Template_files/intro.min.js"></script>
+  <script src="./Message _ Remark Admin Template_files/screenfull.min.js"></script>
+  <script src="./Message _ Remark Admin Template_files/jquery-slidePanel.min.js"></script>
+
+  <!-- Plugins For This Page -->
+  <script src="./Message _ Remark Admin Template_files/jquery-slidePanel.min.js"></script>
+  <script src="./Message _ Remark Admin Template_files/autosize.min.js"></script>
+
+  <!-- Scripts -->
+  <script src="./Message _ Remark Admin Template_files/core.min.js"></script>
+  <script src="./Message _ Remark Admin Template_files/site.min.js"></script>
+
+  <script src="./Message _ Remark Admin Template_files/menu.min.js"></script>
+  <script src="./Message _ Remark Admin Template_files/menubar.min.js"></script>
+  <script src="./Message _ Remark Admin Template_files/gridmenu.min.js"></script>
+  <script src="./Message _ Remark Admin Template_files/sidebar.min.js"></script>
+
+  <script src="./Message _ Remark Admin Template_files/config-colors.min.js"></script>
+  <script src="./Message _ Remark Admin Template_files/config-tour.min.js"></script>
+
+  <script src="./Message _ Remark Admin Template_files/asscrollable.min.js"></script>
+  <script src="./Message _ Remark Admin Template_files/animsition.min(1).js"></script>
+  <script src="./Message _ Remark Admin Template_files/slidepanel.min.js"></script>
+  <script src="./Message _ Remark Admin Template_files/switchery.min(1).js"></script>
+
+
+  <script src="./Message _ Remark Admin Template_files/app.min.js"></script>
+
+  <script src="./Message _ Remark Admin Template_files/message.min.js"></script>
+	
+	<script src="./angular.min.js"></script>
+	<script src="./messagedemo.js"></script>
+
+
+  <!-- Google Analytics -->
+  <script>
+    (function(i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function() {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js',
+      'ga');
+
+    ga('create', 'UA-65522665-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+
+<div class="site-skintools"><div class="site-skintools-inner"><div class="site-skintools-toggle"><i class="icon wb-settings primary-600"></i></div><div class="site-skintools-content"><div class="nav-tabs-horizontal"><ul role="tablist" data-plugin="nav-tabs" class="nav nav-tabs nav-tabs-line"><li role="presentation" class="active"><a role="tab" aria-controls="skintoolsSidebar" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#skintoolsSidebar" data-toggle="tab" aria-expanded="true">Sidebar</a></li><li role="presentation"><a role="tab" aria-controls="skintoolsNavbar" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#skintoolsNavbar" data-toggle="tab" aria-expanded="false">Navbar</a></li><li role="presentation"><a role="tab" aria-controls="skintoolsPrimary" href="http://getbootstrapadmin.com/remark/mmenu/apps/message/message.html#skintoolsPrimary" data-toggle="tab" aria-expanded="false">Primary</a></li></ul><div class="tab-content"><div role="tabpanel" id="skintoolsSidebar" class="tab-pane active"><h4 class="site-skintools-title">Sidebar Skins</h4><div class="radio-custom radio-dark"><input id="skintoolsSidebar-dark" type="radio" name="skintoolsSidebar" value="dark"><label for="skintoolsSidebar-dark">dark</label></div><div class="radio-custom radio-light"><input id="skintoolsSidebar-light" type="radio" name="skintoolsSidebar" value="light"><label for="skintoolsSidebar-light">light</label></div></div><div role="tabpanel" id="skintoolsNavbar" class="tab-pane"><h4 class="site-skintools-title">Navbar Type</h4><div class="checkbox-custom checkbox-inverse"><input id="skintoolsNavbar-inverse" type="checkbox" name="skintoolsNavbar" value="inverse"><label for="skintoolsNavbar-inverse">inverse</label></div><h4 class="site-skintools-title">Navbar Skins</h4><div class="radio-custom radio-primary"><input id="skintoolsNavbar-primary" type="radio" name="skintoolsNavbar" value="primary"><label for="skintoolsNavbar-primary">primary</label></div><div class="radio-custom radio-brown"><input id="skintoolsNavbar-brown" type="radio" name="skintoolsNavbar" value="brown"><label for="skintoolsNavbar-brown">brown</label></div><div class="radio-custom radio-cyan"><input id="skintoolsNavbar-cyan" type="radio" name="skintoolsNavbar" value="cyan"><label for="skintoolsNavbar-cyan">cyan</label></div><div class="radio-custom radio-green"><input id="skintoolsNavbar-green" type="radio" name="skintoolsNavbar" value="green"><label for="skintoolsNavbar-green">green</label></div><div class="radio-custom radio-grey"><input id="skintoolsNavbar-grey" type="radio" name="skintoolsNavbar" value="grey"><label for="skintoolsNavbar-grey">grey</label></div><div class="radio-custom radio-indigo"><input id="skintoolsNavbar-indigo" type="radio" name="skintoolsNavbar" value="indigo"><label for="skintoolsNavbar-indigo">indigo</label></div><div class="radio-custom radio-orange"><input id="skintoolsNavbar-orange" type="radio" name="skintoolsNavbar" value="orange"><label for="skintoolsNavbar-orange">orange</label></div><div class="radio-custom radio-pink"><input id="skintoolsNavbar-pink" type="radio" name="skintoolsNavbar" value="pink"><label for="skintoolsNavbar-pink">pink</label></div><div class="radio-custom radio-purple"><input id="skintoolsNavbar-purple" type="radio" name="skintoolsNavbar" value="purple"><label for="skintoolsNavbar-purple">purple</label></div><div class="radio-custom radio-red"><input id="skintoolsNavbar-red" type="radio" name="skintoolsNavbar" value="red"><label for="skintoolsNavbar-red">red</label></div><div class="radio-custom radio-teal"><input id="skintoolsNavbar-teal" type="radio" name="skintoolsNavbar" value="teal"><label for="skintoolsNavbar-teal">teal</label></div><div class="radio-custom radio-yellow"><input id="skintoolsNavbar-yellow" type="radio" name="skintoolsNavbar" value="yellow"><label for="skintoolsNavbar-yellow">yellow</label></div></div><div role="tabpanel" id="skintoolsPrimary" class="tab-pane"><h4 class="site-skintools-title">Primary Skins</h4><div class="radio-custom radio-primary"><input id="skintoolsPrimary-primary" type="radio" name="skintoolsPrimary" value="primary"><label for="skintoolsPrimary-primary">primary</label></div><div class="radio-custom radio-brown"><input id="skintoolsPrimary-brown" type="radio" name="skintoolsPrimary" value="brown"><label for="skintoolsPrimary-brown">brown</label></div><div class="radio-custom radio-cyan"><input id="skintoolsPrimary-cyan" type="radio" name="skintoolsPrimary" value="cyan"><label for="skintoolsPrimary-cyan">cyan</label></div><div class="radio-custom radio-green"><input id="skintoolsPrimary-green" type="radio" name="skintoolsPrimary" value="green"><label for="skintoolsPrimary-green">green</label></div><div class="radio-custom radio-grey"><input id="skintoolsPrimary-grey" type="radio" name="skintoolsPrimary" value="grey"><label for="skintoolsPrimary-grey">grey</label></div><div class="radio-custom radio-indigo"><input id="skintoolsPrimary-indigo" type="radio" name="skintoolsPrimary" value="indigo"><label for="skintoolsPrimary-indigo">indigo</label></div><div class="radio-custom radio-orange"><input id="skintoolsPrimary-orange" type="radio" name="skintoolsPrimary" value="orange"><label for="skintoolsPrimary-orange">orange</label></div><div class="radio-custom radio-pink"><input id="skintoolsPrimary-pink" type="radio" name="skintoolsPrimary" value="pink"><label for="skintoolsPrimary-pink">pink</label></div><div class="radio-custom radio-purple"><input id="skintoolsPrimary-purple" type="radio" name="skintoolsPrimary" value="purple"><label for="skintoolsPrimary-purple">purple</label></div><div class="radio-custom radio-red"><input id="skintoolsPrimary-red" type="radio" name="skintoolsPrimary" value="red"><label for="skintoolsPrimary-red">red</label></div><div class="radio-custom radio-teal"><input id="skintoolsPrimary-teal" type="radio" name="skintoolsPrimary" value="teal"><label for="skintoolsPrimary-teal">teal</label></div><div class="radio-custom radio-yellow"><input id="skintoolsPrimary-yellow" type="radio" name="skintoolsPrimary" value="yellow"><label for="skintoolsPrimary-yellow">yellow</label></div></div><button class="btn btn-outline btn-block btn-primary margin-top-20" id="skintoolsReset" type="button">Reset</button></div></div></div></div></div></body></html>
