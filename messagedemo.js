@@ -7,10 +7,20 @@ angular
 			{text: 'OK, my name is Limingqiang. I like singing, playing basketballand so on.'},
 			{text: 'I am Derek. I am a photographer.'}
 		];
+		var objDiv = document.getElementById("messagechats");
+
 		$scope.sendMessage = function(){
 			$scope.messageList.push({text: $scope.currentMsg});
 			$scope.currentMsg='';
-			$timeout(function(){ $scope.messageList.push({text: 'Good'});; }, 1000);
+			$timeout(function(){
+				objDiv.scrollTop = objDiv.scrollHeight;
+			}, 50);
+			$timeout(function(){
+				$scope.messageList.push({text: 'Good'});
+				$timeout(function(){
+					objDiv.scrollTop = objDiv.scrollHeight;
+				}, 50);
+			}, 1000);
 		};
 	}
 ]);
