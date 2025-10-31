@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Surface Quality Analyzer (Zebra Stripes)</title>
+    <!-- Load Tailwind CSS using the correct JIT CDN script -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- New Three.js ES Module Import Map (v0.176.0) -->
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.176.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.176.0/examples/jsm/"
+        }
+      }
+    </script>
+</head>
+<body class="bg-gray-900 text-white p-4 h-screen w-screen overflow-hidden font-sans">
+
+    <!-- UI Container: Max width set to xs (max-w-xs) for a smaller panel -->
+    <div id="ui-container" class="absolute top-4 left-4 z-10 p-4 bg-gray-800 bg-opacity-90 rounded-xl shadow-2xl border border-gray-700 max-w-xs">
+        <h1 class="text-xl font-bold mb-2 text-indigo-400">Surface Analysis Tool</h1>
+        <p id="status" class="text-sm text-yellow-400 mb-3">Initializing scene...</p>
+        
+        <div class="space-y-3">
+            <!-- Stripe Frequency Slider (Wider Range) -->
+            <div>
+                <label for="frequency-slider" class="block text-xs font-medium text-gray-400">Stripe Frequency (10-100)</label>
+                <input type="range" id="frequency-slider" min="10" max="100" value="50" step="1" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer range-lg">
+            </div>
+
+            <!-- Stripe Direction Slider (Updated for 360 degree rotation) -->
+            <div>
+                <label for="direction-slider" class="block text-xs font-medium text-gray-400">Stripe Rotation (Full 360° Sweep)</label>
+                <input type="range" id="direction-slider" min="0" max="1" value="0.0" step="0.001" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer range-lg">
+            </div>
+            
+            <!-- Local File Loading UI -->
+            <input type="file" id="local-file-picker" accept=".glb" class="hidden">
+            <button id="load-local-button" class="w-full mt-2 py-2 px-4 bg-indigo-600 hover:bg-indigo-700 rounded-lg text-sm font-semibold transition-colors shadow-md">Select Local .GLB File</button>
+
+            <!-- URL Loading UI -->
+            <label for="model-url-input" class="block text-xs font-medium text-gray-400 mt-4">Or Load from URL</label>
+            <div class="flex space-x-2">
+                <!-- Default Model URL changed -->
+                <input type="text" id="model-url-input" value="https://threejs.org/examples/models/gltf/SheenChair.glb" class="flex-grow p-2 text-sm bg-gray-700 border border-gray-600 rounded-lg focus:ring-indigo-500 focus:border-indigo-500" placeholder="Paste your .glb URL here">
+                <button id="load-url-button" class="py-2 px-4 bg-green-600 hover:bg-green-700 rounded-lg text-sm font-semibold transition-colors shadow-md">Load</button>
+            </div>
+        </div>
+        <p class="text-xs text-gray-500 mt-3">Rotate with Mouse/Touch to inspect surface.</p>
+    </div>
+
+    <!-- Three.js Canvas Container -->
+    <div id="canvas-container" class="w-full h-full absolute top-0 left-0"></div>
+
+    <script type="module">
+        // Import necessary components from Three.js using importmap aliases
+        import * as THREE from "three";
+        import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+        import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+        // --- Global Variables ---
+        let scene, camera, renderer, modelGroup;
+        let controls;
+        let stripeMaterial;
+        const statusElement = document.getElementById('status');
+        const canvasContainer = document.getElementById('canvas-container');
+        const frequencySlider = document.getElementById('frequency-slider');
+        const directionSlider = document.getElementById('direction-slider'); 
+        
+        // UI ELEMENTS
+        const localLoadButton = document.getElementById('load-local-button');
+        const localFileInput = document.getElementById('local-file-picker');
+        const urlInput = document.getElementById('model-url-input');
+        const urlLoadButton = document.getElementById('load-url-button');
+
+
+        // --- Shaders for Zebra Stripe Effect ---
+        // Vertex shader: Transforms the normal into view space and passes it to fragment shader
+        const vertexShader = `
+            varying vec3 vWorldNormal;
+            varying vec3 vWorldPosition;
+            void main() {
+                vWorldNormal = normalize(normalMatrix * normal);
+                vWorldPosition = (modelMatrix * vec4(position, 1.0)).xyz;
+                
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+        `;
+
+        // Fragment shader: Calculates the stripe color based on the View-Space Normal, controlled by uDirection
+        const fragmentShader = `
+          uniform float uFrequency;   // number of stripes
+          uniform float uDirection;   // 0 = X/Y/Z blend axis control
+
+          varying vec3 vWorldNormal;
+          varying vec3 vWorldPosition;
+
+          void main() {
+              // View direction
+              vec3 viewDir = normalize(cameraPosition - vWorldPosition);
+
+              // Reflection direction
+              vec3 reflectDir = reflect(-viewDir, normalize(vWorldNormal));
+              
+              // Determine axis pair and normalized blend factor
+              vec3 axisA, axisB;
+              float localT;
+
+              if (uDirection < 0.33) {
+                  axisA = vec3(1.0, 0.0, 0.0); // X
+                  axisB = vec3(0.0, 1.0, 0.0); // Y
+                  localT = clamp(uDirection / 0.33, 0.0, 1.0);
+              } else if (uDirection < 0.66) {
+                  axisA = vec3(0.0, 1.0, 0.0); // Y
+                  axisB = vec3(0.0, 0.0, 1.0); // Z
+                  localT = clamp((uDirection - 0.33) / 0.33, 0.0, 1.0);
+              } else {
+                  axisA = vec3(1.0, 0.0, 0.0); // X
+                  axisB = vec3(0.0, 0.0, 1.0); // Z
+                  localT = clamp((uDirection - 0.66) / 0.34, 0.0, 1.0);
+              }
+
+              // Blend between the selected axes
+              vec3 baseDir = normalize(mix(axisA, axisB, localT));
+
+              // Compute stripes from reflection direction
+              float val = dot(reflectDir, baseDir) * uFrequency;
+
+              // Hard black-and-white pattern
+              float stripe = step(0.0, sin(val * 3.14159));
+
+              gl_FragColor = vec4(vec3(stripe), 1.0);
+          }
+        `;
+
+        // --- Model Processing Helper ---
+        // Function to apply material, center, and normalize the loaded model
+        function processModel(model, sourceName) {
+            // Apply the zebra stripe material to all meshes in the model
+            model.traverse((child) => {
+                if (child.isMesh) {
+                    // Ensure the geometry has normals for the shader to work correctly
+                    if (!child.geometry.attributes.normal) {
+                        child.geometry.computeVertexNormals();
+                    }
+                    child.material = stripeMaterial;
+                    child.castShadow = true;
+                    child.receiveShadow = true;
+                }
+            });
+
+            // Center and normalize the model size
+            const box = new THREE.Box3().setFromObject(model);
+            const center = box.getCenter(new THREE.Vector3());
+            const size = box.getSize(new THREE.Vector3());
+            const maxDim = Math.max(size.x, size.y, size.z);
+            const scaleFactor = 2 / maxDim; // Normalize to fit in a 2x2x2 cube
+
+            model.position.sub(center).multiplyScalar(scaleFactor); // Center it
+            model.scale.set(scaleFactor, scaleFactor, scaleFactor); // Scale it
+
+            modelGroup.clear(); // Clear previous model
+            modelGroup.add(model);
+            statusElement.textContent = `Model loaded successfully! (${sourceName})`;
+        }
+
+
+        // --- Model Loading from URL ---
+        function loadModelFromURL(url) {
+            if (!url) {
+                 statusElement.textContent = 'ERROR: URL field is empty.';
+                 return;
+            }
+            statusElement.textContent = "Loading model from URL...";
+
+            const loader = new GLTFLoader();
+            loader.load(
+                url,
+                (gltf) => {
+                    processModel(gltf.scene, url);
+                },
+                (xhr) => {
+                    // Loading progress
+                    const percent = Math.round(xhr.loaded / xhr.total * 100);
+                    statusElement.textContent = `Loading from URL: ${percent}%...`;
+                },
+                (error) => {
+                    console.error('An error happened during URL loading:', error);
+                    statusElement.textContent = 'ERROR: Could not load model from URL. Check the console.';
+                    showFallbackGeometry();
+                }
+            );
+        }
+
+        // --- Model Loading from Local File ---
+        function loadModelFromFile(file) {
+            statusElement.textContent = `Loading local file: ${file.name}...`;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const arrayBuffer = e.target.result;
+                const loader = new GLTFLoader();
+
+                try {
+                    // Use GLTFLoader.parse for in-memory data (ArrayBuffer)
+                    loader.parse(arrayBuffer, '', (gltf) => {
+                        processModel(gltf.scene, file.name);
+                    }, (error) => {
+                        console.error('An error happened during parsing:', error);
+                        statusElement.textContent = `ERROR: Could not parse local model: ${file.name}. Check the console.`;
+                        showFallbackGeometry();
+                    });
+                } catch (error) {
+                    console.error('Error during GLTF parsing:', error);
+                    statusElement.textContent = `ERROR: Failed to parse local file: ${file.name}.`;
+                    showFallbackGeometry();
+                }
+            };
+            reader.onerror = function() {
+                console.error('Error reading file.');
+                statusElement.textContent = `ERROR: Failed to read local file: ${file.name}.`;
+                showFallbackGeometry();
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        // --- Initialization ---
+        function init() {
+            // 1. Scene Setup
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x333333);
+
+            // 2. Camera Setup
+            camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(0, 1.5, 4);
+
+            // 3. Renderer Setup
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            canvasContainer.appendChild(renderer.domElement);
+
+            // 4. Controls
+            controls = new OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true; // for smooth control movement
+
+            // 5. Model Group
+            modelGroup = new THREE.Group();
+            scene.add(modelGroup);
+
+            // 6. Zebra Stripe Material
+            stripeMaterial = new THREE.ShaderMaterial({
+                uniforms: {
+                    uFrequency: { value: parseFloat(frequencySlider.value) },
+                    uDirection: { value: parseFloat(directionSlider.value) } 
+                },
+                vertexShader: vertexShader,
+                fragmentShader: fragmentShader,
+                transparent: false,
+            });
+
+            // 7. Event Listeners
+            window.addEventListener('resize', onWindowResize);
+            
+            // Frequency Listener
+            frequencySlider.addEventListener('input', () => {
+                stripeMaterial.uniforms.uFrequency.value = parseFloat(frequencySlider.value);
+            });
+            
+            // Direction Listener 
+            directionSlider.addEventListener('input', () => {
+                stripeMaterial.uniforms.uDirection.value = parseFloat(directionSlider.value);
+            });
+            
+            // LOCAL FILE LISTENER: Button click triggers the hidden file input
+            localLoadButton.addEventListener('click', () => {
+                localFileInput.click(); 
+            });
+
+            // LOCAL FILE CHANGE LISTENER: Handles the file once selected
+            localFileInput.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                if (file) {
+                    loadModelFromFile(file);
+                }
+                // Clear the input so selecting the same file triggers change next time
+                event.target.value = '';
+            });
+
+            // URL LOAD LISTENER: For the separate URL load button
+            urlLoadButton.addEventListener('click', () => {
+                loadModelFromURL(urlInput.value);
+            });
+
+            // Load initial model (using the URL in the input field)
+            loadModelFromURL(urlInput.value);
+
+            // Start animation loop
+            animate();
+            statusElement.textContent = "Ready. Use mouse/touch to inspect the surface.";
+        }
+
+        // --- Fallback Geometry ---
+        function showFallbackGeometry() {
+             statusElement.textContent = "Loading failed. Displaying fallback geometry. Ensure the model has smooth curvature.";
+
+             const geometry = new THREE.TorusKnotGeometry( 1, 0.4, 128, 16 );
+             const mesh = new THREE.Mesh( geometry, stripeMaterial );
+             modelGroup.clear(); // Ensure previous content is removed
+             modelGroup.add(mesh);
+        }
+        
+        // --- Animation Loop ---
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update(); 
+            renderer.render(scene, camera);
+        }
+
+        // --- Window Resize Handler ---
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        // Start the application
+        init();
+    </script>
+</body>
+</html>
