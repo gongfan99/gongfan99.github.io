@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3D Surface Quality Analyzer (Zebra Stripes)</title>
-    <!-- Load Tailwind CSS using the correct JIT CDN script -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     
     <!-- New Three.js ES Module Import Map (v0.176.0) -->
     <script type="importmap">
@@ -16,6 +15,7 @@
         }
       }
     </script>
+    <link rel="stylesheet" href="index.css" />
 </head>
 <body class="bg-gray-900 text-white p-4 h-screen w-screen overflow-hidden font-sans">
 
@@ -45,7 +45,7 @@
             <label for="model-url-input" class="block text-xs font-medium text-gray-400 mt-4">Or Load from URL</label>
             <div class="flex space-x-2">
                 <!-- Default Model URL changed -->
-                <input type="text" id="model-url-input" value="https://threejs.org/examples/models/gltf/SheenChair.glb" class="flex-grow p-2 text-sm bg-gray-700 border border-gray-600 rounded-lg focus:ring-indigo-500 focus:border-indigo-500" placeholder="Paste your .glb URL here">
+                <input type="text" id="model-url-input" value="sample.glb" class="flex-grow p-2 text-sm bg-gray-700 border border-gray-600 rounded-lg focus:ring-indigo-500 focus:border-indigo-500" placeholder="Paste your .glb URL here">
                 <button id="load-url-button" class="py-2 px-4 bg-green-600 hover:bg-green-700 rounded-lg text-sm font-semibold transition-colors shadow-md">Load</button>
             </div>
         </div>
@@ -109,18 +109,18 @@
               vec3 axisA, axisB;
               float localT;
 
-              if (uDirection < 0.33) {
+              if (uDirection < 1.0 / 3.0) {
                   axisA = vec3(1.0, 0.0, 0.0); // X
                   axisB = vec3(0.0, 1.0, 0.0); // Y
-                  localT = clamp(uDirection / 0.33, 0.0, 1.0);
-              } else if (uDirection < 0.66) {
+                  localT = clamp(uDirection * 3.0, 0.0, 1.0);
+              } else if (uDirection < 2.0 / 3.0) {
                   axisA = vec3(0.0, 1.0, 0.0); // Y
                   axisB = vec3(0.0, 0.0, 1.0); // Z
-                  localT = clamp((uDirection - 0.33) / 0.33, 0.0, 1.0);
+                  localT = clamp((uDirection - 1.0 / 3.0) * 3.0, 0.0, 1.0);
               } else {
                   axisA = vec3(1.0, 0.0, 0.0); // X
                   axisB = vec3(0.0, 0.0, 1.0); // Z
-                  localT = clamp((uDirection - 0.66) / 0.34, 0.0, 1.0);
+                  localT = clamp((uDirection - 2.0 / 3.0) * 3.0, 0.0, 1.0);
               }
 
               // Blend between the selected axes
