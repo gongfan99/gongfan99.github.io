@@ -27,8 +27,8 @@
         <div class="space-y-3">
             <!-- Stripe Frequency Slider (Wider Range) -->
             <div>
-                <label for="frequency-slider" class="block text-xs font-medium text-gray-400">Stripe Frequency (10-100)</label>
-                <input type="range" id="frequency-slider" min="10" max="100" value="50" step="1" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer range-lg">
+                <label for="frequency-slider" class="block text-xs font-medium text-gray-400">Stripe Density (low to high)</label>
+                <input type="range" id="frequency-slider" min="10" max="200" value="50" step="1" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer range-lg">
             </div>
 
             <!-- Stripe Direction Slider (Updated for 360 degree rotation) -->
@@ -64,6 +64,7 @@
         // --- Global Variables ---
         let scene, camera, renderer, modelGroup;
         let controls;
+        let axisDir = 0;
         let stripeMaterial;
         const statusElement = document.getElementById('status');
         const canvasContainer = document.getElementById('canvas-container');
@@ -80,57 +81,41 @@
         // --- Shaders for Zebra Stripe Effect ---
         // Vertex shader: Transforms the normal into view space and passes it to fragment shader
         const vertexShader = `
-            varying vec3 vWorldNormal;
-            varying vec3 vWorldPosition;
+            varying vec3 vViewNormal;
+            varying vec3 vViewPosition;
             void main() {
-                vWorldNormal = normalize(normalMatrix * normal);
-                vWorldPosition = (modelMatrix * vec4(position, 1.0)).xyz;
+                vViewNormal = normalize(normalMatrix * normal);
+                vec4 viewPosition4 = modelViewMatrix * vec4(position, 1.0);
+                vViewPosition = viewPosition4.xyz;
                 
-                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                gl_Position = projectionMatrix * viewPosition4;
             }
         `;
 
-        // Fragment shader: Calculates the stripe color based on the View-Space Normal, controlled by uDirection
+        // Fragment shader: Calculates the stripe color based on the View-Space Normal
         const fragmentShader = `
           uniform float uFrequency;   // number of stripes
-          uniform float uDirection;   // 0 = X/Y/Z blend axis control
+          uniform vec3 uXDir;
+          uniform vec3 uYDir;
 
-          varying vec3 vWorldNormal;
-          varying vec3 vWorldPosition;
+          varying vec3 vViewNormal;
+          varying vec3 vViewPosition;
 
           void main() {
               // View direction
-              vec3 viewDir = normalize(cameraPosition - vWorldPosition);
+              vec3 viewDir = normalize(vViewPosition);
 
               // Reflection direction
-              vec3 reflectDir = reflect(-viewDir, normalize(vWorldNormal));
-              
-              // Determine axis pair and normalized blend factor
-              vec3 axisA, axisB;
-              float localT;
-
-              if (uDirection < 1.0 / 3.0) {
-                  axisA = vec3(1.0, 0.0, 0.0); // X
-                  axisB = vec3(0.0, 1.0, 0.0); // Y
-                  localT = clamp(uDirection * 3.0, 0.0, 1.0);
-              } else if (uDirection < 2.0 / 3.0) {
-                  axisA = vec3(0.0, 1.0, 0.0); // Y
-                  axisB = vec3(0.0, 0.0, 1.0); // Z
-                  localT = clamp((uDirection - 1.0 / 3.0) * 3.0, 0.0, 1.0);
-              } else {
-                  axisA = vec3(1.0, 0.0, 0.0); // X
-                  axisB = vec3(0.0, 0.0, 1.0); // Z
-                  localT = clamp((uDirection - 2.0 / 3.0) * 3.0, 0.0, 1.0);
-              }
-
-              // Blend between the selected axes
-              vec3 baseDir = normalize(mix(axisA, axisB, localT));
+              vec3 reflectDir = reflect(viewDir, normalize(vViewNormal));
 
               // Compute stripes from reflection direction
-              float val = dot(reflectDir, baseDir) * uFrequency;
+              float x = dot(reflectDir, uXDir);
+              float y = dot(reflectDir, uYDir);
+              float z = dot(reflectDir, vec3(0.0, 0.0, 1.0));
 
               // Hard black-and-white pattern
-              float stripe = step(0.0, sin(val * 3.14159));
+              float val = (z > 0.0? x : x / sqrt(x * x + y * y)) * uFrequency;
+              float stripe = step(0.0, sin(val));
 
               gl_FragColor = vec4(vec3(stripe), 1.0);
           }
@@ -255,7 +240,8 @@
             stripeMaterial = new THREE.ShaderMaterial({
                 uniforms: {
                     uFrequency: { value: parseFloat(frequencySlider.value) },
-                    uDirection: { value: parseFloat(directionSlider.value) } 
+                    uXDir: {value: new THREE.Vector3(1, 0, 0)},
+                    uYDir: {value: new THREE.Vector3(0, 1, 0)}
                 },
                 vertexShader: vertexShader,
                 fragmentShader: fragmentShader,
@@ -272,7 +258,15 @@
             
             // Direction Listener 
             directionSlider.addEventListener('input', () => {
-                stripeMaterial.uniforms.uDirection.value = parseFloat(directionSlider.value);
+                axisDir = parseFloat(directionSlider.value);
+                axisDir = Math.max(Math.min(axisDir, 1.0), 0.0);
+
+                const theta = axisDir * 2 * Math.PI;
+                const cos_theta = Math.cos(theta);
+                const sin_theta = Math.sin(theta);
+
+                stripeMaterial.uniforms.uXDir.value.set(cos_theta, sin_theta, 0);
+                stripeMaterial.uniforms.uYDir.value.set(-sin_theta, cos_theta, 0);
             });
             
             // LOCAL FILE LISTENER: Button click triggers the hidden file input
@@ -307,7 +301,9 @@
         function showFallbackGeometry() {
              statusElement.textContent = "Loading failed. Displaying fallback geometry. Ensure the model has smooth curvature.";
 
-             const geometry = new THREE.TorusKnotGeometry( 1, 0.4, 128, 16 );
+            //  const geometry = new THREE.TorusKnotGeometry( 1, 0.4, 128, 16 );
+             const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+            //  const geometry = new THREE.SphereGeometry( 1, 32, 16 );
              const mesh = new THREE.Mesh( geometry, stripeMaterial );
              modelGroup.clear(); // Ensure previous content is removed
              modelGroup.add(mesh);
