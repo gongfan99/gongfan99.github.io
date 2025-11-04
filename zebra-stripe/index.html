@@ -28,7 +28,7 @@
             <!-- Stripe Frequency Slider (Wider Range) -->
             <div>
                 <label for="frequency-slider" class="block text-xs font-medium text-gray-400">Stripe Density (low to high)</label>
-                <input type="range" id="frequency-slider" min="10" max="200" value="50" step="1" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer range-lg">
+                <input type="range" id="frequency-slider" min="40" max="800" value="120" step="10" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer range-lg">
             </div>
 
             <!-- Stripe Direction Slider (Updated for 360 degree rotation) -->
@@ -114,8 +114,10 @@
               float z = dot(reflectDir, vec3(0.0, 0.0, 1.0));
 
               // Hard black-and-white pattern
-              float val = (z > 0.0? x : x / sqrt(x * x + y * y)) * uFrequency;
-              float stripe = step(0.0, sin(val));
+              float r2 = x * x + y * y + 1.0e-9;
+            //   float val = (z > 0.0? x : x / sqrt(r2)) * sqrt(1.0 - x * x);
+              float val = z > 0.0? x : x / sqrt(r2);
+              float stripe = step(0.0, sin(val * uFrequency));
 
               gl_FragColor = vec4(vec3(stripe), 1.0);
           }
