@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>glTF draco compression</title>
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.182.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.182.0/examples/jsm/",
+          "gltf_draco_transcoder": "https://static.fgong.dev/gltf_draco_transcoder/v0.2.7/gltf_draco_transcoder.js"
+        }
+      }
+    </script>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body class="bg-gray-900 text-white h-screen w-screen font-sans relative">
+    <!-- Canvas container for side-by-side layout -->
+    <div id="canvas-container" class="flex flex-wrap w-full h-full">
+      <div
+        class="w-screen md:w-[50vw] shrink-0 h-full max-h-[50%] md:max-h-full"
+      >
+        <canvas id="left-canvas" class="h-full w-full"></canvas>
+      </div>
+      <div
+        class="w-screen md:w-[50vw] shrink-0 h-full max-h-[50%] md:max-h-full"
+      >
+        <canvas id="right-canvas" class="h-full w-full"></canvas>
+      </div>
+    </div>
+
+    <!-- Performance metrics (always visible) -->
+    <div
+      class="absolute top-4 left-4 z-20 bg-black bg-opacity-75 text-white p-3 rounded-lg"
+    >
+      <h2>Drop your glb file here</h2>
+      <div class="text-sm">
+        <div>Compression time: <span id="compression-time">-</span> ms</div>
+        <div>Decompression time: <span id="decompression-time">-</span> ms</div>
+      </div>
+    </div>
+
+    <!-- Drop zone overlay -->
+    <div
+      id="drop-zone"
+      class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10 pointer-events-none opacity-0 transition-opacity duration-300"
+    ></div>
+
+    <!-- Settings button -->
+    <button
+      id="settings-btn"
+      class="absolute top-4 right-4 z-20 bg-slate-600 hover:bg-slate-700 text-white w-10 h-10 flex items-center justify-center rounded-[100px] transition-colors"
+    >
+      ⚙️
+    </button>
+
+    <!-- Settings dialog -->
+    <div
+      id="settings-dialog"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-30 hidden"
+    >
+      <div class="bg-gray-800 p-6 rounded-lg w-96">
+        <h3 class="text-xl font-bold mb-4">Compression Settings</h3>
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium mb-2"
+              >Compression Level (0-10)</label
+            >
+            <input
+              type="range"
+              id="compression-level"
+              min="0"
+              max="10"
+              value="7"
+              class="w-full"
+            />
+            <div class="text-sm text-gray-400 mt-1">
+              Current: <span id="compression-level-value">7</span>
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2"
+              >Position Quantization (5-25)</label
+            >
+            <input
+              type="range"
+              id="position-quantization"
+              min="5"
+              max="25"
+              value="11"
+              class="w-full"
+            />
+            <div class="text-sm text-gray-400 mt-1">
+              Current: <span id="position-quantization-value">11</span>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-end space-x-2 mt-6">
+          <button
+            id="settings-cancel"
+            class="px-4 py-2 bg-gray-600 hover:bg-gray-700 rounded-lg transition-colors"
+          >
+            Cancel
+          </button>
+          <button
+            id="settings-save"
+            class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- File information panels -->
+    <div
+      class="absolute bottom-4 left-4 z-20 bg-black bg-opacity-75 text-white p-3 rounded-lg"
+    >
+      <div id="left-info">
+        <div>Raw GLTF</div>
+        <div class="text-sm opacity-75">
+          Size: <span id="left-size">-</span> KB
+        </div>
+        <div class="text-sm opacity-75">
+          Gzip: <span id="left-gzip">-</span> KB
+        </div>
+        <button
+          id="left-download"
+          class="mt-2 px-3 py-1 bg-blue-600 hover:bg-blue-700 rounded text-sm transition-colors"
+        >
+          Download
+        </button>
+      </div>
+    </div>
+
+    <div
+      class="absolute bottom-4 right-4 z-20 bg-black bg-opacity-75 text-white p-3 rounded-lg"
+    >
+      <div id="right-info">
+        <div>Compressed GLTF</div>
+        <div class="text-sm opacity-75">
+          Size: <span id="right-size">-</span> KB
+        </div>
+        <div class="text-sm opacity-75">
+          Gzip: <span id="right-gzip">-</span> KB
+        </div>
+        <button
+          id="right-download"
+          class="mt-2 px-3 py-1 bg-blue-600 hover:bg-blue-700 rounded text-sm transition-colors"
+        >
+          Download
+        </button>
+      </div>
+    </div>
+
+    <script type="module" src="index.mjs"></script>
+  </body>
+</html>
