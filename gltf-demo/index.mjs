@@ -3,6 +3,7 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import MainModule from "gltf_draco_transcoder";
+//import MainModule from "./gltf_draco_transcoder.js";
 
 // WASM module instance
 let wasmModule = null;
@@ -38,6 +39,7 @@ const MODEL_NAME = "currentModel";
 
 // DOM elements
 let dropZone, settingsBtn, settingsDialog;
+let fileSelectBtn, fileInput;
 let compressionLevelInput, positionQuantizationInput;
 let compressionLevelValue, positionQuantizationValue;
 let compressionTimeEl, decompressionTimeEl;
@@ -60,7 +62,7 @@ function isDracoCompressed(gltfBuffer) {
     // Verify GLB magic header
     const dataView = new DataView(gltfBuffer);
     const magic = String.fromCharCode(
-      ...new Uint8Array(gltfBuffer.slice(0, 4))
+      ...new Uint8Array(gltfBuffer.slice(0, 4)),
     );
     if (magic !== "glTF") {
       throw Error("no magic word glTF found in the file");
@@ -232,7 +234,7 @@ function createSimpleEnvironmentMap() {
   gradient.addColorStop(0, adjustBrightness("#4a5568", environmentBrightness)); // Dark gray at top
   gradient.addColorStop(
     0.5,
-    adjustBrightness("#2d3748", environmentBrightness)
+    adjustBrightness("#2d3748", environmentBrightness),
   ); // Medium gray in middle
   gradient.addColorStop(1, adjustBrightness("#1a202c", environmentBrightness)); // Darker gray at bottom
 
@@ -335,18 +337,24 @@ function initScenes() {
   rightScene.add(hemisphereLight.clone());
 }
 
+const loader = new GLTFLoader();
+
+// Always provide DRACOLoader to handle both raw and compressed files
+const dracoLoader = new DRACOLoader();
+dracoLoader.setDecoderPath(
+  "https://cdn.jsdelivr.net/npm/three@0.182.0/examples/jsm/libs/draco/gltf/",
+);
+loader.setDRACOLoader(dracoLoader);
+
 // Load GLTF model
-async function loadGltfModel(gltfBuffer, scene, camera, controls) {
+async function loadGltfModel(
+  gltfBuffer,
+  scene,
+  camera,
+  controls,
+  shouldCenterCamera = true,
+) {
   try {
-    const loader = new GLTFLoader();
-
-    // Always provide DRACOLoader to handle both raw and compressed files
-    const dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath(
-      "https://cdn.jsdelivr.net/npm/three@0.182.0/examples/jsm/libs/draco/gltf/"
-    );
-    loader.setDRACOLoader(dracoLoader);
-
     // Use parseAsync to load directly from ArrayBuffer
     const gltf = await loader.parseAsync(gltfBuffer, "");
 
@@ -362,7 +370,7 @@ async function loadGltfModel(gltfBuffer, scene, camera, controls) {
         } else {
           console.warn(
             "Material is not a PBR material, cannot set roughness/metalness:",
-            child.material
+            child.material,
           );
           // Optional: Replace with MeshStandardMaterial if needed
           // const newMaterial = new THREE.MeshStandardMaterial({ map: child.material.map });
@@ -387,8 +395,10 @@ async function loadGltfModel(gltfBuffer, scene, camera, controls) {
     gltf.scene.name = MODEL_NAME;
     scene.add(gltf.scene);
 
-    // Center camera on the loaded model
-    centerCamera(camera, controls, gltf.scene);
+    // Center camera on the loaded model (only for new file loads, not settings changes)
+    if (shouldCenterCamera) {
+      centerCamera(camera, controls, gltf.scene);
+    }
 
     return gltf.scene;
   } catch (error) {
@@ -398,23 +408,29 @@ async function loadGltfModel(gltfBuffer, scene, camera, controls) {
 }
 
 // Update models
-async function updateModels(rawGltf, compressedGltf) {
+async function updateModels(
+  rawGltf,
+  compressedGltf,
+  shouldCenterCamera = true,
+) {
   try {
     leftModel = await loadGltfModel(
       rawGltf,
       leftScene,
       leftCamera,
-      leftControls
+      leftControls,
+      shouldCenterCamera,
     );
     rightModel = await loadGltfModel(
       compressedGltf,
       rightScene,
       rightCamera,
-      rightControls
+      rightControls,
+      shouldCenterCamera,
     );
 
     // Update UI with sizes and times
-    updateUI();
+    await updateUI();
   } catch (error) {
     console.error("Error loading models:", error);
   }
@@ -425,11 +441,13 @@ function initUI() {
   dropZone = document.getElementById("drop-zone");
   settingsBtn = document.getElementById("settings-btn");
   settingsDialog = document.getElementById("settings-dialog");
+  fileSelectBtn = document.getElementById("file-select-btn");
+  fileInput = document.getElementById("file-input");
   compressionLevelInput = document.getElementById("compression-level");
   positionQuantizationInput = document.getElementById("position-quantization");
   compressionLevelValue = document.getElementById("compression-level-value");
   positionQuantizationValue = document.getElementById(
-    "position-quantization-value"
+    "position-quantization-value",
   );
   compressionTimeEl = document.getElementById("compression-time");
   decompressionTimeEl = document.getElementById("decompression-time");
@@ -453,22 +471,68 @@ function initUI() {
     updateSliderValues();
   });
 
-  document.getElementById("settings-save").addEventListener("click", () => {
-    compressionLevel = parseInt(compressionLevelInput.value);
-    positionQuantization = parseInt(positionQuantizationInput.value);
-    settingsDialog.classList.add("hidden");
-  });
+  document
+    .getElementById("settings-save")
+    .addEventListener("click", async () => {
+      const oldCompressionLevel = compressionLevel;
+      const oldPositionQuantization = positionQuantization;
+
+      compressionLevel = parseInt(compressionLevelInput.value);
+      positionQuantization = parseInt(positionQuantizationInput.value);
+      settingsDialog.classList.add("hidden");
+
+      // If original file was uncompressed and settings changed, recompute
+      if (
+        originalRawGltf !== null &&
+        (compressionLevel !== oldCompressionLevel ||
+          positionQuantization !== oldPositionQuantization)
+      ) {
+        try {
+          // Measure new compression time
+          const compressStart = performance.now();
+          currentCompressedGltf = await compressGltf(originalRawGltf);
+          compressionTime = performance.now() - compressStart;
+
+          // Measure decompression time for the new compressed file
+          const decompressStart = performance.now();
+          const reDecompressedGltf = await decompressGltf(
+            currentCompressedGltf,
+          );
+          decompressionTime = performance.now() - decompressStart;
+
+          // Update models and UI (don't recenter camera)
+          await updateModels(currentRawGltf, currentCompressedGltf, false);
+        } catch (error) {
+          console.error("Error recomputing with new settings:", error);
+        }
+      }
+    });
 
   // Slider value updates
   compressionLevelInput.addEventListener("input", updateSliderValues);
   positionQuantizationInput.addEventListener("input", updateSliderValues);
 
+  // File selection button
+  fileSelectBtn.addEventListener("click", () => {
+    fileInput.click();
+  });
+
+  // File input change handler
+  fileInput.addEventListener("change", (e) => {
+    const files = e.target.files;
+    if (files.length > 0 && files[0].name.endsWith(".glb")) {
+      handleFileDrop(files[0]);
+    }
+    // Reset the input so the same file can be selected again if needed
+    fileInput.value = "";
+  });
+
   // Download buttons
   leftDownloadBtn.addEventListener("click", () =>
-    downloadFile(originalRawGltf, "raw.glb")
+    downloadFile(currentRawGltf, "raw.glb"),
   );
   rightDownloadBtn.addEventListener("click", () =>
-    downloadFile(originalCompressedGltf, "compressed.glb")
+    downloadFile(currentCompressedGltf, "compressed.glb"),
   );
 
   updateSliderValues();
@@ -500,14 +564,14 @@ async function updateUI() {
   if (decompressionTimeEl)
     decompressionTimeEl.textContent = decompressionTime.toFixed(0);
 
-  if (originalRawGltf && leftSizeEl && leftGzipEl) {
-    const sizes = await calculateSizes(originalRawGltf);
+  if (currentRawGltf && leftSizeEl && leftGzipEl) {
+    const sizes = await calculateSizes(currentRawGltf);
     leftSizeEl.textContent = sizes.raw;
     leftGzipEl.textContent = sizes.gzip;
   }
 
-  if (originalCompressedGltf && rightSizeEl && rightGzipEl) {
-    const sizes = await calculateSizes(originalCompressedGltf);
+  if (currentCompressedGltf && rightSizeEl && rightGzipEl) {
+    const sizes = await calculateSizes(currentCompressedGltf);
     rightSizeEl.textContent = sizes.raw;
     rightGzipEl.textContent = sizes.gzip;
   }
@@ -520,39 +584,39 @@ async function handleFileDrop(file) {
     const isCompressed = isDracoCompressed(buffer);
 
     if (isCompressed) {
-      // Store original compressed file
+      // Store original compressed file, set raw to null
       originalCompressedGltf = buffer;
+      originalRawGltf = null;
 
       // Measure decompression time
       const decompressStart = performance.now();
-      originalRawGltf = await decompressGltf(buffer);
+      currentRawGltf = await decompressGltf(buffer);
       decompressionTime = performance.now() - decompressStart;
 
       // Also measure compression time for the decompressed file
       const compressStart = performance.now();
-      const recompressedGltf = await compressGltf(originalRawGltf);
+      const recompressedGltf = await compressGltf(currentRawGltf);
       compressionTime = performance.now() - compressStart;
 
-      // Create processed versions for display
+      // Create processed version for display
       currentCompressedGltf = originalCompressedGltf;
-      currentRawGltf = originalRawGltf;
     } else {
-      // Store original raw file
+      // Store original raw file, set compressed to null
       originalRawGltf = buffer;
+      originalCompressedGltf = null;
 
       // Measure compression time
       const compressStart = performance.now();
-      originalCompressedGltf = await compressGltf(buffer);
+      currentCompressedGltf = await compressGltf(buffer);
       compressionTime = performance.now() - compressStart;
 
       // Also measure decompression time for the compressed file
       const decompressStart = performance.now();
-      const reDecompressedGltf = await decompressGltf(originalCompressedGltf);
+      const reDecompressedGltf = await decompressGltf(currentCompressedGltf);
       decompressionTime = performance.now() - decompressStart;
 
-      // Create processed versions for display
+      // Create processed version for display
       currentRawGltf = originalRawGltf;
-      currentCompressedGltf = originalCompressedGltf;
     }
 
     await updateModels(currentRawGltf, currentCompressedGltf);
