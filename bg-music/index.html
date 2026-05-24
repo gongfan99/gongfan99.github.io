@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Background Audio Creator</title>
+  <style>
+    :root {
+      --deep: #0b3d2b;
+      --forest: #17684b;
+      --green: #2f8a62;
+      --mint: #b9efb2;
+      --pale: #eaf7ef;
+      --sage: #d9eee2;
+      --off: #f7f8f4;
+      --text: #172018;
+      --muted: #6f7c72;
+      --warn: #b7791f;
+      --error: #b42318;
+      --white: #fff;
+      --shadow: 0 18px 45px rgba(11, 61, 43, .12);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, "SF Pro Display", "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(180deg, #eef7ef 0%, var(--off) 36%, #fff 100%);
+      color: var(--text);
+    }
+
+    .hero {
+      padding: 34px 22px 92px;
+      background:
+        radial-gradient(circle at 80% 20%, rgba(185,239,178,.35), transparent 34%),
+        linear-gradient(135deg, var(--deep), var(--forest));
+      color: white;
+    }
+
+    .hero-inner, main { max-width: 1160px; margin: 0 auto; }
+    .badge {
+      display: inline-flex;
+      padding: 7px 12px;
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 999px;
+      background: rgba(255,255,255,.13);
+      backdrop-filter: blur(12px);
+      font-size: 13px;
+      margin-bottom: 16px;
+    }
+    h1 { margin: 0 0 8px; font-size: clamp(32px, 5vw, 56px); letter-spacing: -.04em; }
+    .hero p { margin: 0; color: rgba(255,255,255,.82); max-width: 720px; font-size: 17px; line-height: 1.55; }
+
+    main { margin-top: -58px; padding: 0 22px 40px; }
+    .panel, .card {
+      background: rgba(255,255,255,.92);
+      border: 1px solid rgba(217,238,226,.9);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+    }
+    .panel { padding: 22px; }
+    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
+    .card { padding: 18px; box-shadow: 0 10px 28px rgba(11,61,43,.08); }
+    .span-4 { grid-column: span 4; }
+    .span-6 { grid-column: span 6; }
+    .span-8 { grid-column: span 8; }
+    .span-12 { grid-column: span 12; }
+
+    h2 { margin: 0 0 12px; font-size: 17px; letter-spacing: -.01em; }
+    label { display: block; color: var(--muted); font-size: 13px; margin-bottom: 7px; }
+    input[type="file"], input[type="number"] {
+      width: 100%;
+      border: 1px solid var(--sage);
+      background: #fff;
+      border-radius: 14px;
+      padding: 11px 12px;
+      color: var(--text);
+      outline: none;
+    }
+    input:focus { border-color: var(--green); box-shadow: 0 0 0 4px rgba(47,138,98,.14); }
+    .fields { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .meta { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .meta div { padding: 10px; border-radius: 14px; background: var(--pale); min-width: 0; }
+    .meta strong { display: block; font-size: 12px; color: var(--muted); font-weight: 600; }
+    .meta span { display: block; margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    .wave-wrap {
+      position: relative;
+      background: linear-gradient(180deg, #fbfffb, var(--pale));
+      border: 1px solid var(--sage);
+      border-radius: 20px;
+      padding: 12px;
+      overflow: hidden;
+    }
+    canvas { display: block; width: 100%; height: 310px; cursor: crosshair; }
+    .hint { color: var(--muted); font-size: 13px; margin: 10px 0 0; }
+
+    .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    button, .button-like {
+      border: 0;
+      border-radius: 999px;
+      padding: 11px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .12s ease, opacity .12s ease, background .12s ease;
+    }
+    button:hover:not(:disabled) { transform: translateY(-1px); }
+    button:disabled { opacity: .48; cursor: not-allowed; transform: none; }
+    .primary { background: var(--deep); color: #fff; }
+    .secondary { background: var(--pale); color: var(--deep); border: 1px solid var(--sage); }
+    .danger { background: #fff0ed; color: var(--error); border: 1px solid #ffd1c8; }
+    .position { color: var(--muted); font-variant-numeric: tabular-nums; }
+    .status { margin-top: 10px; color: var(--forest); font-size: 14px; line-height: 1.45; }
+    .status.warn { color: var(--warn); }
+    .status.error { color: var(--error); }
+    .bpm { font-size: 34px; color: var(--deep); font-weight: 800; letter-spacing: -.04em; }
+    .small { color: var(--muted); font-size: 13px; line-height: 1.45; }
+
+    @media (max-width: 880px) {
+      .span-4, .span-6, .span-8 { grid-column: span 12; }
+      .fields { grid-template-columns: 1fr; }
+      canvas { height: 260px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="badge">Local browser processing · WAV export</div>
+      <h1>Background Audio Creator</h1>
+      <p>Upload audio, inspect automatic beats and bars, choose a trim range, add an after-trim fade-out, then download a processed WAV file.</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="panel grid" aria-label="Audio editor">
+      <div class="card span-4">
+        <h2>1. Upload audio</h2>
+        <label for="fileInput">MP3, WAV, or browser-supported audio</label>
+        <input id="fileInput" type="file" accept="audio/*" />
+        <div id="loadStatus" class="status">Choose an audio file to begin.</div>
+      </div>
+
+      <div class="card span-8">
+        <h2>Audio metadata</h2>
+        <div class="meta">
+          <div><strong>File</strong><span id="metaName">—</span></div>
+          <div><strong>Duration</strong><span id="metaDuration">—</span></div>
+          <div><strong>Sample rate</strong><span id="metaRate">—</span></div>
+          <div><strong>Channels</strong><span id="metaChannels">—</span></div>
+        </div>
+      </div>
+
+      <div class="card span-12">
+        <h2>2. Waveform, beats, bars, trim, and fade-out</h2>
+        <div class="wave-wrap">
+          <canvas id="waveCanvas" height="310" aria-label="Audio waveform editor"></canvas>
+        </div>
+        <p class="hint">Audio starts on beat ONE. Drag the emerald handles to set trim start and trim end; handles snap to detected beats. The mint region is kept; the gradient region after trim end is the fade-out.</p>
+      </div>
+
+      <div class="card span-6">
+        <h2>3. Timing</h2>
+        <div class="fields">
+          <div>
+            <label for="trimStart">Trim start (seconds)</label>
+            <input id="trimStart" type="number" min="0" step="0.01" value="0" disabled />
+          </div>
+          <div>
+            <label for="trimEnd">Trim end (seconds)</label>
+            <input id="trimEnd" type="number" min="0" step="0.01" value="0" disabled />
+          </div>
+          <div>
+            <label for="fadeOut">Fade-out after trim (seconds)</label>
+            <input id="fadeOut" type="number" min="0" step="0.01" value="3" disabled />
+          </div>
+        </div>
+        <div class="controls" style="margin-top:14px">
+          <button id="setStartBtn" class="secondary" disabled>Set start at playhead</button>
+          <button id="setEndBtn" class="secondary" disabled>Set end at playhead</button>
+          <button id="resetBtn" class="secondary" disabled>Reset</button>
+        </div>
+        <div id="timingStatus" class="status"></div>
+      </div>
+
+      <div class="card span-6">
+        <h2>Beat/bar detection</h2>
+        <div class="bpm"><span id="bpmValue">—</span> <span style="font-size:16px;letter-spacing:0">BPM</span></div>
+        <p class="small">Time signature: <strong>4/4</strong>. Detection is automatic and approximate.</p>
+        <div id="beatStatus" class="status">Load audio to detect beats.</div>
+      </div>
+
+      <div class="card span-6">
+        <h2>4. Preview</h2>
+        <div class="controls">
+          <button id="playOriginalBtn" class="primary" disabled>Play original</button>
+          <button id="previewBtn" class="secondary" disabled>Preview output once</button>
+          <button id="stopBtn" class="danger" disabled>Stop</button>
+          <span class="position">Position: <span id="positionValue">0:00.00</span></span>
+        </div>
+      </div>
+
+      <div class="card span-6">
+        <h2>5. Export</h2>
+        <div class="controls">
+          <button id="downloadBtn" class="primary" disabled>Download WAV</button>
+        </div>
+        <p class="small">WAV is generated locally in your browser. No audio is uploaded.</p>
+        <div id="exportStatus" class="status"></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const els = {
+      file: document.getElementById('fileInput'), canvas: document.getElementById('waveCanvas'),
+      loadStatus: document.getElementById('loadStatus'), timingStatus: document.getElementById('timingStatus'), beatStatus: document.getElementById('beatStatus'), exportStatus: document.getElementById('exportStatus'),
+      name: document.getElementById('metaName'), duration: document.getElementById('metaDuration'), rate: document.getElementById('metaRate'), channels: document.getElementById('metaChannels'),
+      trimStart: document.getElementById('trimStart'), trimEnd: document.getElementById('trimEnd'), fadeOut: document.getElementById('fadeOut'),
+      bpm: document.getElementById('bpmValue'), position: document.getElementById('positionValue'),
+      playOriginal: document.getElementById('playOriginalBtn'), preview: document.getElementById('previewBtn'), stop: document.getElementById('stopBtn'), download: document.getElementById('downloadBtn'),
+      setStart: document.getElementById('setStartBtn'), setEnd: document.getElementById('setEndBtn'), reset: document.getElementById('resetBtn')
+    };
+
+    const ctx = els.canvas.getContext('2d');
+    let audioCtx, buffer, fileName = 'audio', waveform = [], beats = [], bpm = null;
+    let trimStart = 0, trimEnd = 0, fadeOut = 3;
+    let activeSource = null, activeGain = null, playStartClock = 0, playOffset = 0, playMode = null, raf = null;
+    let dragging = null;
+
+    function fmt(t) {
+      if (!Number.isFinite(t)) return '—';
+      const m = Math.floor(t / 60), s = t - m * 60;
+      return `${m}:${s.toFixed(2).padStart(5, '0')}`;
+    }
+    function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+    function status(el, msg, cls='') { el.className = 'status ' + cls; el.textContent = msg; }
+    function getAudioCtx() { audioCtx ||= new (window.AudioContext || window.webkitAudioContext)(); return audioCtx; }
+
+    els.file.addEventListener('change', async () => {
+      const file = els.file.files[0];
+      if (!file) return;
+      try {
+        stopPlayback();
+        status(els.loadStatus, 'Loading and decoding audio...');
+        const arr = await file.arrayBuffer();
+        buffer = await getAudioCtx().decodeAudioData(arr.slice(0));
+        fileName = file.name.replace(/\.[^.]+$/, '') || 'audio';
+        trimStart = 0; trimEnd = buffer.duration; fadeOut = Math.min(3, Math.max(0, buffer.duration * .1));
+        els.trimStart.value = trimStart.toFixed(2); els.trimEnd.value = trimEnd.toFixed(2); els.fadeOut.value = fadeOut.toFixed(2);
+        setEnabled(true);
+        els.name.textContent = file.name;
+        els.duration.textContent = fmt(buffer.duration);
+        els.rate.textContent = `${buffer.sampleRate} Hz`;
+        els.channels.textContent = buffer.numberOfChannels;
+        createWaveform();
+        detectBeats();
+        draw();
+        status(els.loadStatus, 'Audio loaded.');
+        validateTiming();
+      } catch (err) {
+        console.error(err);
+        status(els.loadStatus, 'Could not decode this audio file in your browser.', 'error');
+      }
+    });
+
+    function setEnabled(on) {
+      [els.trimStart, els.trimEnd, els.fadeOut, els.playOriginal, els.preview, els.stop, els.download, els.setStart, els.setEnd, els.reset].forEach(e => e.disabled = !on);
+    }
+
+    function createWaveform() {
+      const data = buffer.getChannelData(0);
+      const points = 1800, block = Math.max(1, Math.floor(data.length / points));
+      waveform = [];
+      for (let i = 0; i < points; i++) {
+        let min = 1, max = -1;
+        const start = i * block, end = Math.min(data.length, start + block);
+        for (let j = start; j < end; j++) { const v = data[j]; if (v < min) min = v; if (v > max) max = v; }
+        waveform.push({min, max});
+      }
+    }
+
+    function detectBeats() {
+      beats = []; bpm = null; els.bpm.textContent = '—';
+      const data = buffer.getChannelData(0), sr = buffer.sampleRate;
+      const win = Math.floor(sr * 0.05), energies = [];
+      for (let i = 0; i < data.length; i += win) {
+        let sum = 0, n = Math.min(win, data.length - i);
+        for (let j = 0; j < n; j++) sum += data[i + j] * data[i + j];
+        energies.push(Math.sqrt(sum / n));
+      }
+      const avg = energies.reduce((a,b)=>a+b,0) / Math.max(1, energies.length);
+      const peaks = [];
+      for (let i = 2; i < energies.length - 2; i++) {
+        const local = (energies[i-2]+energies[i-1]+energies[i]+energies[i+1]+energies[i+2]) / 5;
+        if (energies[i] > avg * 1.35 && energies[i] > local * 1.18 && energies[i] > energies[i-1] && energies[i] > energies[i+1]) {
+          const t = i * win / sr;
+          if (!peaks.length || t - peaks[peaks.length - 1] > 0.22) peaks.push(t);
+        }
+      }
+      if (peaks.length < 4) {
+        status(els.beatStatus, 'Beat detection was uncertain; waveform editing and export are still available.', 'warn');
+        return;
+      }
+      const intervals = [];
+      for (let i = 1; i < peaks.length; i++) {
+        const d = peaks[i] - peaks[i-1];
+        if (d >= .25 && d <= 1.5) intervals.push(d);
+      }
+      if (!intervals.length) {
+        status(els.beatStatus, 'Beat detection failed; waveform editing and export are still available.', 'warn');
+        return;
+      }
+      intervals.sort((a,b)=>a-b);
+      let beatDur = intervals[Math.floor(intervals.length/2)];
+      let estimated = 60 / beatDur;
+      while (estimated < 70) { estimated *= 2; beatDur /= 2; }
+      while (estimated > 180) { estimated /= 2; beatDur *= 2; }
+      bpm = Math.round(estimated);
+      const beatStep = 60 / bpm;
+      for (let t = 0; t < buffer.duration; t += beatStep) beats.push(t);
+      trimStart = snapStartToBeat(trimStart);
+      trimEnd = snapEndToBeat(trimEnd);
+      els.trimStart.value = trimStart.toFixed(2);
+      els.trimEnd.value = trimEnd.toFixed(2);
+      els.bpm.textContent = bpm;
+      const confidence = Math.min(100, Math.round((intervals.length / Math.max(1, peaks.length - 1)) * 100));
+      status(els.beatStatus, `Detected approximately ${bpm} BPM. The waveform grid starts at beat ONE/bar ONE. Start and end snap to beats. Confidence: ${confidence}%.` + (confidence < 45 ? ' Markers may be inaccurate.' : ''), confidence < 45 ? 'warn' : '');
+    }
+
+    function resizeCanvas() {
+      const rect = els.canvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      els.canvas.width = Math.max(1, Math.floor(rect.width * dpr));
+      els.canvas.height = Math.max(1, Math.floor(rect.height * dpr));
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      draw();
+    }
+    window.addEventListener('resize', resizeCanvas);
+    setTimeout(resizeCanvas, 0);
+
+    function timeToX(t, w) { return buffer ? (t / buffer.duration) * w : 0; }
+    function xToTime(x, w) { return buffer ? clamp((x / w) * buffer.duration, 0, buffer.duration) : 0; }
+    function nearestBeatTime(t) {
+      if (!buffer || !beats.length) return clamp(t, 0, buffer ? buffer.duration : 0);
+      let best = beats[0], bestDist = Math.abs(t - best);
+      for (const beat of beats) {
+        const dist = Math.abs(t - beat);
+        if (dist < bestDist) { best = beat; bestDist = dist; }
+      }
+      return clamp(best, 0, buffer.duration);
+    }
+    function snapStartToBeat(t) {
+      if (!buffer) return 0;
+      let snapped = nearestBeatTime(t);
+      if (snapped >= trimEnd) {
+        const before = beats.filter(beat => beat < trimEnd - 0.001);
+        snapped = before.length ? before[before.length - 1] : 0;
+      }
+      return clamp(snapped, 0, Math.max(0, trimEnd - 0.01));
+    }
+    function snapEndToBeat(t) {
+      if (!buffer) return 0;
+      let snapped = nearestBeatTime(t);
+      if (snapped <= trimStart) {
+        const after = beats.find(beat => beat > trimStart + 0.001);
+        snapped = after ?? buffer.duration;
+      }
+      return clamp(snapped, Math.min(buffer.duration, trimStart + 0.01), buffer.duration);
+    }
+
+    function draw() {
+      const rect = els.canvas.getBoundingClientRect();
+      const w = rect.width, h = rect.height;
+      ctx.clearRect(0,0,w,h);
+      ctx.fillStyle = '#fbfffb'; ctx.fillRect(0,0,w,h);
+      ctx.strokeStyle = '#d9eee2'; ctx.beginPath(); ctx.moveTo(0,h/2); ctx.lineTo(w,h/2); ctx.stroke();
+      if (!buffer) {
+        ctx.fillStyle = '#6f7c72'; ctx.font = '15px Segoe UI, sans-serif'; ctx.fillText('Upload audio to show waveform', 18, h/2 - 12); return;
+      }
+      const sx = timeToX(trimStart, w), ex = timeToX(trimEnd, w), fadeEnd = Math.min(buffer.duration, trimEnd + fadeOut), fx = timeToX(fadeEnd, w);
+      // time ticks
+      ctx.strokeStyle = 'rgba(111,124,114,.22)'; ctx.fillStyle = '#6f7c72'; ctx.font = '12px Segoe UI, sans-serif';
+      const tick = niceTick(buffer.duration);
+      for (let t = 0; t <= buffer.duration; t += tick) { const x = timeToX(t,w); ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,h); ctx.stroke(); ctx.fillText(fmt(t), x+4, 16); }
+      // beat/bar lines
+      beats.forEach((t,i) => { const x = timeToX(t,w); ctx.strokeStyle = i % 4 === 0 ? 'rgba(11,61,43,.52)' : 'rgba(47,138,98,.28)'; ctx.lineWidth = i % 4 === 0 ? 1.6 : 1; ctx.beginPath(); ctx.moveTo(x,22); ctx.lineTo(x,h); ctx.stroke(); });
+      ctx.lineWidth = 1;
+      // waveform
+      ctx.strokeStyle = '#17684b'; ctx.beginPath();
+      waveform.forEach((p,i) => { const x = (i / (waveform.length - 1)) * w; const y1 = h/2 + p.min * h*.38, y2 = h/2 + p.max * h*.38; ctx.moveTo(x,y1); ctx.lineTo(x,y2); });
+      ctx.stroke();
+      // overlays
+      ctx.fillStyle = 'rgba(185,239,178,.28)'; ctx.fillRect(sx, 0, Math.max(0, ex-sx), h);
+      if (fx > ex) { const grad = ctx.createLinearGradient(ex,0,fx,0); grad.addColorStop(0,'rgba(47,138,98,.26)'); grad.addColorStop(1,'rgba(47,138,98,0)'); ctx.fillStyle = grad; ctx.fillRect(ex,0,fx-ex,h); }
+      drawHandle(sx, 'START', h); drawHandle(ex, 'END', h);
+      const pos = currentPosition(); if (pos != null) { const px = timeToX(pos,w); ctx.strokeStyle = '#b42318'; ctx.beginPath(); ctx.moveTo(px,0); ctx.lineTo(px,h); ctx.stroke(); }
+    }
+
+    function niceTick(duration) { if (duration <= 30) return 5; if (duration <= 90) return 10; if (duration <= 240) return 30; return 60; }
+    function drawHandle(x, label, h) { ctx.fillStyle = '#0b3d2b'; ctx.fillRect(x-3,0,6,h); ctx.fillStyle = '#0b3d2b'; ctx.fillRect(x-24, h-28, 48, 22); ctx.fillStyle = 'white'; ctx.font = '11px Segoe UI, sans-serif'; ctx.textAlign = 'center'; ctx.fillText(label, x, h-13); ctx.textAlign = 'left'; }
+
+    function updateFromInputs() {
+      if (!buffer) return;
+      const requestedStart = clamp(parseFloat(els.trimStart.value) || 0, 0, buffer.duration);
+      const requestedEnd = clamp(parseFloat(els.trimEnd.value) || 0, 0, buffer.duration);
+      fadeOut = clamp(parseFloat(els.fadeOut.value) || 0, 0, buffer.duration);
+      trimStart = snapStartToBeat(requestedStart);
+      trimEnd = snapEndToBeat(requestedEnd);
+      els.trimStart.value = trimStart.toFixed(2);
+      els.trimEnd.value = trimEnd.toFixed(2);
+      validateTiming(); draw();
+    }
+    [els.trimStart, els.trimEnd].forEach(e => e.addEventListener('change', updateFromInputs));
+    els.fadeOut.addEventListener('input', updateFromInputs);
+
+    function validateTiming() {
+      if (!buffer) return false;
+      if (trimEnd <= trimStart) { status(els.timingStatus, 'Trim end must be after trim start.', 'error'); els.download.disabled = els.preview.disabled = true; return false; }
+      const eff = Math.min(fadeOut, Math.max(0, buffer.duration - trimEnd));
+      status(els.timingStatus, `Output duration: ${fmt((trimEnd-trimStart)+eff)}. Effective fade-out: ${eff.toFixed(2)}s.`);
+      els.download.disabled = els.preview.disabled = false;
+      return true;
+    }
+
+    els.canvas.addEventListener('pointerdown', e => {
+      if (!buffer) return;
+      const r = els.canvas.getBoundingClientRect(), x = e.clientX - r.left;
+      const sx = timeToX(trimStart, r.width), ex = timeToX(trimEnd, r.width);
+      dragging = Math.abs(x-sx) < Math.abs(x-ex) ? 'start' : 'end';
+      els.canvas.setPointerCapture(e.pointerId); moveHandle(x, r.width);
+    });
+    els.canvas.addEventListener('pointermove', e => { if (!dragging || !buffer) return; const r = els.canvas.getBoundingClientRect(); moveHandle(e.clientX - r.left, r.width); });
+    els.canvas.addEventListener('pointerup', () => dragging = null);
+    function moveHandle(x,w) {
+      const t = xToTime(x,w);
+      if (dragging === 'start') trimStart = snapStartToBeat(t); else trimEnd = snapEndToBeat(t);
+      els.trimStart.value = trimStart.toFixed(2); els.trimEnd.value = trimEnd.toFixed(2); validateTiming(); draw();
+    }
+
+    els.reset.addEventListener('click', () => { if (!buffer) return; trimStart = 0; trimEnd = snapEndToBeat(buffer.duration); fadeOut = Math.min(3, buffer.duration*.1); els.trimStart.value = trimStart.toFixed(2); els.trimEnd.value = trimEnd.toFixed(2); els.fadeOut.value = fadeOut.toFixed(2); validateTiming(); draw(); });
+    els.setStart.addEventListener('click', () => { const p = currentPosition(); if (buffer && p != null) { trimStart = snapStartToBeat(p); els.trimStart.value = trimStart.toFixed(2); validateTiming(); draw(); } });
+    els.setEnd.addEventListener('click', () => { const p = currentPosition(); if (buffer && p != null) { trimEnd = snapEndToBeat(p); els.trimEnd.value = trimEnd.toFixed(2); validateTiming(); draw(); } });
+
+    els.playOriginal.addEventListener('click', async () => {
+      if (!buffer) return; await getAudioCtx().resume();
+      if (playMode === 'original') { stopPlayback(); return; }
+      stopPlayback(); playMode = 'original'; playOffset = 0; startSource(0, buffer.duration, false); els.playOriginal.textContent = 'Pause original';
+    });
+    els.preview.addEventListener('click', async () => { if (!buffer || !validateTiming()) return; await getAudioCtx().resume(); stopPlayback(); playMode = 'preview'; const out = makeProcessedBuffer(); playProcessed(out); });
+    els.stop.addEventListener('click', stopPlayback);
+    els.download.addEventListener('click', () => { if (!buffer || !validateTiming()) return; status(els.exportStatus, 'Preparing WAV...'); const out = makeProcessedBuffer(); const blob = encodeWav(out); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `${fileName}-trimmed.wav`; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href), 1000); status(els.exportStatus, 'WAV download started.'); });
+
+    function startSource(offset, duration) {
+      activeSource = getAudioCtx().createBufferSource(); activeSource.buffer = buffer; activeSource.connect(getAudioCtx().destination); playStartClock = getAudioCtx().currentTime - offset; activeSource.start(0, offset, duration); activeSource.onended = stopPlayback; tick();
+    }
+    function playProcessed(out) { activeSource = getAudioCtx().createBufferSource(); activeSource.buffer = out; activeSource.connect(getAudioCtx().destination); playStartClock = getAudioCtx().currentTime; activeSource.start(); activeSource.onended = stopPlayback; tick(); }
+    function stopPlayback() { if (activeSource) { try { activeSource.onended = null; activeSource.stop(); } catch {} } activeSource = null; playMode = null; els.playOriginal.textContent = 'Play original'; els.position.textContent = '0:00.00'; cancelAnimationFrame(raf); raf = null; draw(); }
+    function currentPosition() { if (!activeSource || !audioCtx) return null; const t = audioCtx.currentTime - playStartClock; return playMode === 'preview' ? trimStart + t : t; }
+    function tick() { const p = currentPosition(); if (p != null) els.position.textContent = fmt(p); draw(); raf = requestAnimationFrame(tick); }
+
+    function makeProcessedBuffer() {
+      const sr = buffer.sampleRate, channels = buffer.numberOfChannels;
+      const effectiveFade = Math.min(fadeOut, Math.max(0, buffer.duration - trimEnd));
+      const startS = Math.floor(trimStart * sr), normalEndS = Math.floor(trimEnd * sr), totalS = Math.max(1, Math.floor(((trimEnd-trimStart)+effectiveFade) * sr));
+      const out = getAudioCtx().createBuffer(channels, totalS, sr);
+      const fadeSamples = Math.max(0, totalS - (normalEndS - startS));
+      for (let ch = 0; ch < channels; ch++) {
+        const src = buffer.getChannelData(ch), dst = out.getChannelData(ch);
+        for (let i = 0; i < totalS; i++) {
+          const si = startS + i;
+          let gain = 1;
+          const fadeIndex = i - (normalEndS - startS);
+          if (fadeIndex >= 0 && fadeSamples > 0) gain = Math.max(0, 1 - fadeIndex / fadeSamples);
+          dst[i] = (src[si] || 0) * gain;
+        }
+      }
+      return out;
+    }
+
+    function encodeWav(buf) {
+      const channels = buf.numberOfChannels, sr = buf.sampleRate, frames = buf.length;
+      const bytes = 44 + frames * channels * 2;
+      const ab = new ArrayBuffer(bytes), view = new DataView(ab);
+      writeStr(view,0,'RIFF'); view.setUint32(4,36+frames*channels*2,true); writeStr(view,8,'WAVE'); writeStr(view,12,'fmt ');
+      view.setUint32(16,16,true); view.setUint16(20,1,true); view.setUint16(22,channels,true); view.setUint32(24,sr,true); view.setUint32(28,sr*channels*2,true); view.setUint16(32,channels*2,true); view.setUint16(34,16,true); writeStr(view,36,'data'); view.setUint32(40,frames*channels*2,true);
+      let off = 44;
+      const data = Array.from({length: channels}, (_,ch)=>buf.getChannelData(ch));
+      for (let i = 0; i < frames; i++) for (let ch = 0; ch < channels; ch++) { const s = clamp(data[ch][i], -1, 1); view.setInt16(off, s < 0 ? s * 0x8000 : s * 0x7fff, true); off += 2; }
+      return new Blob([ab], {type:'audio/wav'});
+    }
+    function writeStr(view, offset, str) { for (let i=0; i<str.length; i++) view.setUint8(offset+i, str.charCodeAt(i)); }
+  </script>
+</body>
+</html>
