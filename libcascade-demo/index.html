@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f5f5f5" />
+    <title>libcascade playground</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.185.1/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.185.1/examples/jsm/"
+        }
+      }
+    </script>
+    <script type="module" src="./app.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="libcascade playground home">
+          <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2.8 20.2 7v10L12 21.2 3.8 17V7L12 2.8Z" fill="none" stroke="currentColor" stroke-width="1.5" />
+            <path d="m4.2 7.1 7.8 4.1 7.8-4.1M12 11.2v9.5" fill="none" stroke="currentColor" stroke-width="1.5" />
+            <circle cx="12" cy="11.2" r="1.8" fill="var(--color-brand-yellow)" />
+          </svg>
+          <span>libcascade</span>
+        </a>
+
+        <div class="topbar-tools">
+          <span id="wasmBadge" class="status-badge" aria-label="WASM mode">WASM · single-threaded</span>
+          <span id="runtimeBadge" class="status-badge status-badge-muted">Ready to run</span>
+          <button id="themeToggle" class="icon-button" type="button" aria-label="Switch theme" title="Switch theme">
+            <span aria-hidden="true">◐</span>
+          </button>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <section class="pane code-pane" aria-labelledby="codeTitle">
+          <div class="pane-header">
+            <div>
+              <p class="eyebrow">JavaScript</p>
+              <h1 id="codeTitle">Build a shape</h1>
+            </div>
+            <div class="editor-actions">
+              <label class="visually-hidden" for="exampleSelect">Load example</label>
+              <select id="exampleSelect" class="example-select" aria-label="Load example">
+                <option value="" selected disabled>Examples</option>
+                <option value="box.mjs">Box</option>
+                <option value="sphere.mjs">Sphere</option>
+                <option value="cylinder.mjs">Cylinder</option>
+                <option value="boolean-cut.mjs">Boolean cut</option>
+                <option value="filleted-box.mjs">Filleted box</option>
+                <option value="loft.mjs">Loft</option>
+                <option value="gear.mjs">Gear</option>
+                <option value="multiple-shapes.mjs">Multiple shapes</option>
+                <option value="compound.mjs">Compound</option>
+                <option value="gordon-surface.mjs">Gordon surface</option>
+                <option value="thread.mjs">Helical thread</option>
+              </select>
+              <button
+                id="runButton"
+                class="button button-primary"
+                type="button"
+                disabled
+                aria-label="Run script (Ctrl+Enter or Cmd+Enter)"
+                title="Run script (Ctrl+Enter or Cmd+Enter)"
+              >
+                <span class="button-label">RUN</span>
+                <span class="button-spinner" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+
+          <div class="code-editor-shell">
+            <pre id="codeHighlight" class="code-highlight" aria-hidden="true"><code></code></pre>
+            <textarea id="codeEditor" class="code-editor" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="JavaScript CAD code"></textarea>
+          </div>
+
+          <section class="error-panel" data-state="empty" aria-labelledby="errorTitle">
+            <div class="error-panel-header">
+              <h2 id="errorTitle">Errors</h2>
+              <span id="errorCount" class="error-count">0</span>
+            </div>
+            <pre id="errorLog" class="error-log" role="log" aria-live="polite">No errors yet.</pre>
+          </section>
+        </section>
+
+        <section class="pane viewer-pane" aria-labelledby="viewerTitle">
+          <div class="pane-header viewer-header">
+            <div>
+              <p class="eyebrow">Preview</p>
+              <h2 id="viewerTitle">3D viewer</h2>
+            </div>
+            <div class="viewer-actions">
+              <span id="modelMeta" class="model-meta">No model loaded</span>
+              <details id="exportMenu" class="export-menu">
+                <summary class="button button-secondary">
+                  Export
+                  <svg class="summary-chevron" viewBox="0 0 10 6" aria-hidden="true" focusable="false">
+                    <path d="M1 1 5 5 9 1" />
+                  </svg>
+                </summary>
+                <div class="export-popover" role="menu" aria-label="Export model">
+                  <button type="button" role="menuitem" data-export="step">STEP</button>
+                  <button type="button" role="menuitem" data-export="stl">STL</button>
+                  <button type="button" role="menuitem" data-export="glb">GLB</button>
+                </div>
+              </details>
+            </div>
+          </div>
+
+          <div id="viewer" class="viewer-stage" aria-label="Interactive 3D model viewer">
+            <canvas id="viewerCanvas"></canvas>
+            <canvas id="axisCanvas" class="axis-canvas" width="88" height="88" aria-hidden="true"></canvas>
+            <div id="emptyState" class="empty-state">
+              <div class="empty-state-mark" aria-hidden="true">◇</div>
+              <p>Run the script to inspect the shape.</p>
+              <span>Orbit, pan, and zoom the generated model here.</span>
+            </div>
+            <div id="viewerStatus" class="viewer-status" role="status" aria-live="polite">
+              <span class="status-dot" aria-hidden="true"></span>
+              <span id="statusText">Ready to run</span>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
