@@ -270,17 +270,38 @@ function clearErrors() {
   updateErrorPanel();
 }
 
-function reportError(phase, error) {
+function reportError(phase, error, oc = null) {
   errorTotal += 1;
-  const message = formatError(error);
+  const message = formatError(error, oc);
   updateErrorPanel(`${phase}: ${message}`);
   console.error(`[${phase}]`, error);
 }
 
-function formatError(error) {
+function formatError(error, oc = null) {
   if (error instanceof PipelineError) {
     return error.message;
   }
+
+  if (
+    oc &&
+    typeof oc.getExceptionMessage === "function" &&
+    typeof WebAssembly?.Exception === "function" &&
+    error instanceof WebAssembly.Exception
+  ) {
+    try {
+      const decoded = oc.getExceptionMessage(error);
+      if (Array.isArray(decoded)) {
+        const [type, message] = decoded;
+        const details = [type, message]
+          .filter((value) => typeof value === "string" && value.trim())
+          .join(": ");
+        if (details) return details;
+      }
+    } catch {
+      // Fall through to the generic formatting below.
+    }
+  }
+
   if (error && typeof error.message === "string" && error.message.trim()) {
     return error.message.trim();
   }
@@ -908,8 +929,6 @@ function initViewer() {
   camera.up.set(0, 1, 0);
 
   controls = new OrbitControls(camera, dom.viewerCanvas);
-  controls.enableDamping = true;
-  controls.dampingFactor = 0.08;
   controls.target.set(0, 0, 0);
   controls.addEventListener("change", drawAxisGizmo);
 
@@ -1014,12 +1033,14 @@ async function runScript() {
   clearErrors();
   setStatus("Loading libcascade…", "working");
   let phase = "Initialize";
+  let activeOc = null;
   let stage;
   const id = ++runNumber;
 
   try {
     await nextFrame();
     const oc = await getOc();
+    activeOc = oc;
     setWasmStatus();
 
     let executableSource = {
@@ -1076,8 +1097,8 @@ async function runScript() {
     const wrapped =
       error instanceof PipelineError
         ? error
-        : new PipelineError(phase, formatError(error), error);
-    reportError(wrapped.phase, wrapped);
+        : new PipelineError(phase, formatError(error, activeOc), error);
+    reportError(wrapped.phase, wrapped, activeOc);
     setStatus(`${wrapped.phase} failed`, "error");
     disposeStage(stage);
   } finally {
@@ -1131,7 +1152,7 @@ async function exportCurrent(format) {
     setStatus(`${phase} downloaded`, "ready");
     dom.exportMenu.open = false;
   } catch (error) {
-    reportError(phase, error);
+    reportError(phase, error, currentModel?.oc);
     setStatus(`${phase} failed`, "error");
   } finally {
     busy = false;

@@ -73,6 +73,7 @@
 html,
 body {
   min-width: 320px;
+  height: 100%;
   min-height: 100%;
   margin: 0;
 }
@@ -108,7 +109,8 @@ textarea:focus-visible {
 .app-shell {
   display: grid;
   grid-template-rows: 56px minmax(0, 1fr);
-  min-height: 100dvh;
+  height: 100dvh;
+  min-height: 0;
 }
 
 .topbar {
@@ -687,6 +689,7 @@ h2 {
   }
 
   .app-shell {
+    height: auto;
     min-height: 100dvh;
   }
 
