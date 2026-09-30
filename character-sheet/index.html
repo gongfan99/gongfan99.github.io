@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f3f0e9" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <title>Character Sheet — Six-view 3D study</title>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.182.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.182.0/examples/jsm/"
+        }
+      }
+    </script>
+    <link rel="stylesheet" href="./style.css" />
+    <script defer src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script type="module" src="./app.js"></script>
+  </head>
+  <body>
+    <main class="sheet" id="drop-target">
+      <header class="sheet-header">
+        <div class="heading-group">
+          <p class="eyebrow">Object study <span class="eyebrow-line"></span> 001</p>
+          <input id="sheet-title" class="sheet-title" aria-label="Sheet title" value="PHONE STAND" spellcheck="false" maxlength="60" />
+          <p class="header-subtitle" id="model-status">Loading phone-stand.glb…</p>
+        </div>
+        <div class="header-actions">
+          <span class="edition">SIX VIEW REFERENCE</span>
+          <button id="upload-button" class="text-button" type="button" aria-label="Open a GLB file">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 13V3m0 0L6.5 6.5M10 3l3.5 3.5M3 13.5v2.3c0 .7.5 1.2 1.2 1.2h11.6c.7 0 1.2-.5 1.2-1.2v-2.3" /></svg>
+            <span>LOAD GLB</span>
+          </button>
+          <button id="download-button" class="text-button" type="button" aria-label="Download the sheet as a PNG">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v10m0 0L6.5 9.5M10 13l3.5-3.5M3 14.5v1.3c0 .7.5 1.2 1.2 1.2h11.6c.7 0 1.2-.5 1.2-1.2v-1.3" /></svg>
+            <span>EXPORT PNG</span>
+          </button>
+          <button id="settings-button" class="icon-button" type="button" aria-label="Open appearance settings" title="Appearance settings">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14M7 3v4m6 1v4m-5 1v4" /><circle cx="7" cy="5" r="1.7" /><circle cx="13" cy="10" r="1.7" /><circle cx="8" cy="15" r="1.7" /></svg>
+          </button>
+        </div>
+      </header>
+
+      <div class="guide-row"><span>FIG. 01 — FORM &amp; FINISH</span></div>
+
+      <section class="view-grid" id="view-grid" aria-label="Six views of the 3D model"></section>
+
+      <footer class="sheet-footer">
+        <span id="material-summary">MATERIAL <span class="footer-slash">/</span> WARM BEIGE, SATIN</span>
+      </footer>
+      <input id="file-input" type="file" accept=".glb,model/gltf-binary" hidden />
+    </main>
+
+    <div id="drop-overlay" class="drop-overlay" hidden aria-hidden="true">
+      <div class="drop-inner"><span class="drop-mark">↧</span><span>DROP GLB TO CREATE YOUR SHEET</span></div>
+    </div>
+
+    <dialog id="settings-dialog" class="settings-dialog" aria-labelledby="settings-title">
+      <div class="dialog-header">
+        <div><p class="eyebrow">Object study / controls</p><h2 id="settings-title">Appearance</h2></div>
+        <button id="close-settings" class="dialog-close" type="button" aria-label="Close settings">×</button>
+      </div>
+      <p class="dialog-intro">Changes apply to all six views. Your original GLB materials are kept for a full reset.</p>
+      <div class="setting-block">
+        <div class="setting-label-row"><label for="material-select">SURFACE FINISH</label><span>01 / 02</span></div>
+        <select id="material-select">
+          <option value="original">Original GLB material</option>
+          <option value="matte">Matte ceramic</option>
+          <option value="satin">Satin polymer</option>
+          <option value="metal">Brushed metal</option>
+          <option value="gloss">Gloss lacquer</option>
+        </select>
+      </div>
+      <div class="setting-block">
+        <div class="setting-label-row"><label for="color-input">OBJECT COLOR</label><span>02 / 02</span></div>
+        <div class="color-row">
+          <input id="color-input" type="color" value="#ddc7a7" aria-label="Object color" />
+          <span id="color-value">#DDC7A7</span>
+          <label class="color-toggle"><input id="use-color" type="checkbox" /><span>Use color</span></label>
+        </div>
+        <p class="setting-help">Turn on “Use color” to tint the object. The original finish stays available.</p>
+      </div>
+      <div class="dialog-actions">
+        <button id="reset-appearance" class="reset-button" type="button">RESET TO ORIGINAL</button>
+        <button id="done-settings" class="done-button" type="button">DONE <span>↗</span></button>
+      </div>
+    </dialog>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
